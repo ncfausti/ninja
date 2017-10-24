@@ -1,0 +1,37 @@
+{
+	"name": "eract",
+	"version": "1.1.0",
+	"private": true,
+	"dependencies": {
+		"bootstrap": "^4.0.0-alpha.6",
+		"draft-js": "^0.10.1",
+		"react": "^15.6.1",
+		"react-dom": "^15.6.1",
+		"react-draft-wysiwyg": "^1.10.4",
+		"react-icons": "^2.2.5",
+		"react-notification-system": "^0.2.14",
+		"react-router": "^3.0.5",
+		"react-scripts": "1.0.10",
+		"react-scrollbar": "^0.5.1",
+		"react-select": "^1.0.0-rc.5",
+		"react-transition-group": "^1.2.0",
+		"reactable": "^0.14.1",
+		"reactstrap": "^4.8.0",
+		"recharts": "^1.0.0-alpha.6",
+		"screenfull": "^3.3.1"
+	},
+	"scripts": {
+		"build:css": "node-sass-chokidar src/ -o src/",
+		"watch:css": "node-sass-chokidar src/ -o src/ --watch --recursive",
+		"start:js": "react-scripts start",
+		"build:js": "react-scripts build",
+		"start": "npm-run-all -p build:css watch:css start:js",
+		"build": "npm-run-all -p build:css build:js",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	},
+	"devDependencies": {
+		"node-sass-chokidar": "0.0.3",
+		"npm-run-all": "^4.0.2"
+	}
+}

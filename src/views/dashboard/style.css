@@ -1,0 +1,21 @@
+.view .view-dashboard .sales-card .card + .card .card-block {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #eceff1; }
+  .view .view-dashboard .sales-card .card + .card .card-block svg {
+    transform: translate(0, -2px); }
+
+.view .view-dashboard .sales-card .card + .card .card-block:last-child {
+  border: 0; }
+.calculator-inputs {
+  display:inline-block;
+  float:right;}
+.recharts-wrapper {
+  display:inline-block;}
+.calculator-form {
+  text-align: right; }
+.calculator-form label {
+  margin-right:1.1rem;
+}
