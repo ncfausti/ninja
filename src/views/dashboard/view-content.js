@@ -268,10 +268,6 @@ class SalesCard extends React.Component {
                 <h4 className="font-weight-normal mb-0"><IconDollar size="16" color="#00c853"/>23,500</h4>
             </CardBlock>
             <CardBlock>
-                <h6 className="text-uppercase title font-weight-bold small text-nowrap">Forecast Income</h6>
-                <h4 className="font-weight-normal mb-0"><IconDollar size="16" color="#00c853"/>83,230</h4>
-            </CardBlock>
-            <CardBlock>
                 <h6 className="text-uppercase title font-weight-bold small">Pageviews</h6>
                 <h4 className="font-weight-normal mb-0"><IconTrendUp size="16" color="#00c853"/>21,32,520</h4>
             </CardBlock>
