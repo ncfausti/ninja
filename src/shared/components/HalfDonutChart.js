@@ -14,12 +14,12 @@ export default class HalfDonutChart extends React.Component{
     	<PieChart width={600} height={300} onMouseEnter={this.onPieEnter}>
         <Pie
           data={data} 
-          cx={420} 
-          cy={200} 
+          cx={240}
+          cy={130}
           startAngle={180}
           endAngle={0}
-          innerRadius={60}
-          outerRadius={80} 
+          innerRadius={90}
+          outerRadius={110}
           fill="#8884d8"
           paddingAngle={5}
         >

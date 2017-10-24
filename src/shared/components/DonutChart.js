@@ -14,10 +14,10 @@ export default class DonutChart extends React.Component{
     	<PieChart width={600} height={300} onMouseEnter={this.onPieEnter}>
         <Pie
           data={data} 
-          cx={120} 
-          cy={200} 
-          innerRadius={60}
-          outerRadius={80} 
+          cx={240}
+          cy={130}
+          innerRadius={90}
+          outerRadius={110}
           fill="#8884d8"
           paddingAngle={5}
         >

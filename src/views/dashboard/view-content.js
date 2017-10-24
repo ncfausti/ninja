@@ -21,7 +21,8 @@ import IconBalance from 'react-icons/lib/md/account-balance';
 import IconDot from 'react-icons/lib/md/fiber-manual-record';
 import {StackedAreaChart} from "../../shared/components/StackedAreaChart";
 import CalculatorForm from "../../shared/components/CalculatorForm";
-
+import HalfDonutChart from "../../shared/components/HalfDonutChart";
+import DonutChart from "../../shared/components/DonutChart";
 
 
 // Sales Chart
@@ -205,18 +206,32 @@ class SalesCard extends React.Component {
                     // social media shares, by month
                     // init with static data
 
-                    {name: 'September', Twitter: 7700, Facebook: 400,
-                        Articles: 500, Forums:600,Tweets:600, Sentiment: 650, Dispensaries:700},
+                    {
+                        name: 'September', Twitter: 7700, Facebook: 400,
+                        Articles: 500, Forums: 600, Tweets: 600, Sentiment: 650, Dispensaries: 700,
+                        lineChart: 3500
+                    },
 
-                    {name: 'October', Twitter: 2200, Facebook: 500,
-                        Articles: 600, Forums:700,Tweets:600, Sentiment: 650, Dispensaries:700},
+                    {
+                        name: 'October', Twitter: 2200, Facebook: 500,
+                        Articles: 600, Forums: 700, Tweets: 600, Sentiment: 650, Dispensaries: 700,
+                        lineChart: 3200
+                    },
 
-                    {name: 'November', Twitter: 2300, Facebook: 600,
-                        Articles: 700, Forums:800,Tweets:600, Sentiment: 650, Dispensaries:700},
+                    {
+                        name: 'November', Twitter: 2300, Facebook: 600,
+                        Articles: 700, Forums: 800, Tweets: 600, Sentiment: 650, Dispensaries: 700,
+                        lineChart: 3700
+                    },
 
-                    {name: 'December', Twitter: 1150, Facebook: 370,
-                        Articles: 400, Forums:500, Tweets:500, Sentiment: 650, Dispensaries:700}
-                ]}
+                    {
+                        name: 'December', Twitter: 1150, Facebook: 370,
+                        Articles: 400, Forums: 500, Tweets: 500, Sentiment: 650, Dispensaries: 700,
+                        lineChart: 3400
+                    }
+                ],
+
+            }
         }
 
        update(e) {
@@ -251,25 +266,21 @@ class SalesCard extends React.Component {
         render() {
             return(
     <CardGroup className="sales-card mb-4">
-        <Card style={{'flex': '3 0 0'}}>
+        <Card style={{'flex': '3'}}>
             <CardBlock>
                 <CardTitle className="text-uppercase h6">Your Brandshares</CardTitle>
                 <div className="small mb-4 card-subtitle">Growth over time</div>
                 <div style={{width: '100%', height: '280px'}}>
                     {/*<SalesDataChart/>*/}
                     <StackedAreaChart data={this.state.areaChartData} />
-                    <CalculatorForm update={this.update.bind(this)} />
                 </div>
             </CardBlock>
         </Card>
-        <Card>
+        <Card style={{'flex': '2'}}>
             <CardBlock>
-                <h6 className="text-uppercase title font-weight-bold small">Net Income</h6>
-                <h4 className="font-weight-normal mb-0"><IconDollar size="16" color="#00c853"/>23,500</h4>
-            </CardBlock>
-            <CardBlock>
-                <h6 className="text-uppercase title font-weight-bold small">Pageviews</h6>
-                <h4 className="font-weight-normal mb-0"><IconTrendUp size="16" color="#00c853"/>21,32,520</h4>
+                <CardTitle className="text-uppercase h6">Brandshare Calculator</CardTitle>
+                <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
+                <CalculatorForm update={this.update.bind(this)} />
             </CardBlock>
         </Card>
     </CardGroup>
@@ -283,74 +294,84 @@ export default () => (
 
         <Row>
             {/* blocks */}
-            <div className="col-sm-6 col-md-3">
-                <Card className="mb-4">
-                    <CardBlock>
-                        <CardTitle className="text-uppercase small font-weight-bold">New Visitors</CardTitle>
-                        <div className="d-flex align-items-center">
-                            <h3 className="mr-2 font-weight-normal">2,544</h3>
-                            <div className="small">
-                                <IconLevelDown size="14"/><span className="badge badge-danger">-28%</span>
-                            </div>
-                        </div>
-                    </CardBlock>
-                    <div style={{width: '100%', height: '60px'}}>
-                        <BlocksChart dataKey="uv" stroke="#69F0AE" fill="#69F0AE"/>
-                    </div>
-                </Card>
+            {/*<div className="col-sm-6 col-md-3">*/}
+                {/*<Card className="mb-4">*/}
+                    {/*<CardBlock>*/}
+                        {/*<CardTitle className="text-uppercase small font-weight-bold">New Visitors</CardTitle>*/}
+                        {/*<div className="d-flex align-items-center">*/}
+                            {/*<h3 className="mr-2 font-weight-normal">2,544</h3>*/}
+                            {/*<div className="small">*/}
+                                {/*<IconLevelDown size="14"/><span className="badge badge-danger">-28%</span>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</CardBlock>*/}
+                    {/*<div style={{width: '100%', height: '60px'}}>*/}
+                        {/*<BlocksChart dataKey="uv" stroke="#69F0AE" fill="#69F0AE"/>*/}
+                    {/*</div>*/}
+                {/*</Card>*/}
 
-                <Card className="mb-4">
-                    <CardBlock>
-                        <CardTitle className="text-uppercase small font-weight-bold">Bounce Rate</CardTitle>
-                        <div className="d-flex align-items-center">
-                            <h3 className="mr-2 font-weight-normal">65%</h3>
-                            <div className="small">
-                                <IconLevelDown size="14"/><span className="badge badge-danger">-12%</span>
-                            </div>
-                        </div>
-                    </CardBlock>
-                    <div style={{width: '100%', height: '60px'}}>
-                        <BlocksChart dataKey="br" stroke="#7C4DFF" fill="#7C4DFF"/>
-                    </div>
-                </Card>
-            </div>
-            <div className="col-sm-6 col-md-3">
-                <Card className="mb-4">
-                    <CardBlock>
-                        <CardTitle className="text-uppercase small font-weight-bold">Purchases</CardTitle>
-                        <div className="d-flex align-items-center">
-                            <h3 className="mr-2 font-weight-normal">789</h3>
-                            <div className="small">
-                                <IconLevelUp size="14"/><span className="badge badge-success">+8%</span>
-                            </div>
-                        </div>
-                    </CardBlock>
-                    <div style={{width: '100%', height: '60px'}}>
-                        <BlocksChart dataKey="sales" stroke="#448AFF" fill="#448AFF"/>
-                    </div>
-                </Card>
+                {/*<Card className="mb-4">*/}
+                    {/*<CardBlock>*/}
+                        {/*<CardTitle className="text-uppercase small font-weight-bold">Bounce Rate</CardTitle>*/}
+                        {/*<div className="d-flex align-items-center">*/}
+                            {/*<h3 className="mr-2 font-weight-normal">65%</h3>*/}
+                            {/*<div className="small">*/}
+                                {/*<IconLevelDown size="14"/><span className="badge badge-danger">-12%</span>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</CardBlock>*/}
+                    {/*<div style={{width: '100%', height: '60px'}}>*/}
+                        {/*<BlocksChart dataKey="br" stroke="#7C4DFF" fill="#7C4DFF"/>*/}
+                    {/*</div>*/}
+                {/*</Card>*/}
+            {/*</div>*/}
+            {/*<div className="col-sm-6 col-md-3">*/}
+                {/*<Card className="mb-4">*/}
+                    {/*<CardBlock>*/}
+                        {/*<CardTitle className="text-uppercase small font-weight-bold">Purchases</CardTitle>*/}
+                        {/*<div className="d-flex align-items-center">*/}
+                            {/*<h3 className="mr-2 font-weight-normal">789</h3>*/}
+                            {/*<div className="small">*/}
+                                {/*<IconLevelUp size="14"/><span className="badge badge-success">+8%</span>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</CardBlock>*/}
+                    {/*<div style={{width: '100%', height: '60px'}}>*/}
+                        {/*<BlocksChart dataKey="sales" stroke="#448AFF" fill="#448AFF"/>*/}
+                    {/*</div>*/}
+                {/*</Card>*/}
 
-                <Card className="mb-4">
+                {/*<Card className="mb-4">*/}
+                    {/*<CardBlock>*/}
+                        {/*<CardTitle className="text-uppercase small font-weight-bold">New Sessions</CardTitle>*/}
+                        {/*<div className="d-flex align-items-center">*/}
+                            {/*<h3 className="mr-2 font-weight-normal">2994</h3>*/}
+                            {/*<div className="small">*/}
+                                {/*<IconLevelUp size="14"/><span className="badge badge-success">+19%</span>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</CardBlock>*/}
+                    {/*<div style={{width: '100%', height: '60px'}}>*/}
+                        {/*<BlocksChart dataKey="ns" stroke="#40C4FF" fill="#40C4FF"/>*/}
+                    {/*</div>*/}
+                {/*</Card>*/}
+            {/*</div>*/}
+            <div className="mb-4 col-sm-12 col-md-6">
+                <Card>
                     <CardBlock>
-                        <CardTitle className="text-uppercase small font-weight-bold">New Sessions</CardTitle>
-                        <div className="d-flex align-items-center">
-                            <h3 className="mr-2 font-weight-normal">2994</h3>
-                            <div className="small">
-                                <IconLevelUp size="14"/><span className="badge badge-success">+19%</span>
-                            </div>
+                        <CardTitle className="text-uppercase h6">Comments Sentiment</CardTitle>
+                        <div><DonutChart className={"scaling-svg"} />
                         </div>
                     </CardBlock>
-                    <div style={{width: '100%', height: '60px'}}>
-                        <BlocksChart dataKey="ns" stroke="#40C4FF" fill="#40C4FF"/>
-                    </div>
                 </Card>
             </div>
             {/* traffic source */}
             <div className="mb-4 col-sm-12 col-md-6">
                 <Card>
                     <CardBlock>
-                        <CardTitle className="text-uppercase h6">Traffic Sources</CardTitle>
-                        <div style={{width: '100%', height: '276px'}}><TrafficSourceChart/></div>
+                        <CardTitle className="text-uppercase h6">Overall Sentiment</CardTitle>
+                        <div><HalfDonutChart className={"scaling-svg"} />
+                        </div>
                     </CardBlock>
                 </Card>
             </div>
@@ -361,7 +382,7 @@ export default () => (
             <div className="col-md-5 mb-4">
                 <Card>
                     <CardBlock>
-                        <CardTitle className="h6 text-uppercase">Recent Activities</CardTitle>
+                        <CardTitle className="h6 text-uppercase">Recent Tweets</CardTitle>
                         <div className="small mb-4 card-subtitle">At a glance</div>
                         <div className="d-flex mb-4 align-items-center">
                             <IconAndroid size="52"  style={{'border': '1px solid #eee'}} className="mr-3 text-success rounded-circle p-3"/>

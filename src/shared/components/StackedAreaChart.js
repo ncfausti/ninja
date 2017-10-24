@@ -1,17 +1,19 @@
 import React from 'react';
 import 'recharts';
 
-import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
+import {ComposedChart,AreaChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 
 export const StackedAreaChart = (props) => (
 
+        <ComposedChart width={600} height={270} data={props.data}
+                       margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+    	{/*<AreaChart width={600} height={270}*/}
+            {/*margin={{top: 10, right: 30, left: 0, bottom: 0}}>*/}
 
-    	<AreaChart width={500} height={250} data={props.data}
-            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
 
-        <XAxis dataKey="name"/>
+                <XAxis hide={false} dataKey="name" scale="point" />
         <YAxis/>
-        <CartesianGrid strokeDasharray="3 3"/>
+        <CartesianGrid strokeDasharray="3 3" />
         <Tooltip/>
         <Area type='monotone' dataKey='Twitter' stackId="1" stroke='rgb(70,160,236)' fill='rgb(70,160,236)' />
         <Area type='monotone' dataKey='Facebook' stackId="1" stroke='rgb(72,104,172)' fill='rgb(72,104,172)' />
@@ -20,6 +22,8 @@ export const StackedAreaChart = (props) => (
         <Area type='monotone' dataKey='Tweets' stackId="1" stroke='rgb(70,160,236)' fill='rgb(70,160,236)' />
         <Area type='monotone' dataKey='Sentiment' stackId="1" stroke='rgb(20,160,136)' fill='rgb(20,160,136)' />
         <Area type='monotone' dataKey='Dispensaries' stackId="1" stroke='rgb(200,80,136)' fill='rgb(200,80,136)' />
-      </AreaChart>
+      {/*</AreaChart>*/}
+        <Line type='monotone' dataKey='lineChart'  stroke='#ff0000'/>
+    </ComposedChart>
     );
 
