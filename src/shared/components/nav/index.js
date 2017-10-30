@@ -71,80 +71,83 @@ class NavList extends React.Component {
                         <span className="name">Dashboard</span>
                     </IndexLink>
                 </li>
-
-                <li onClick={this.handleClick.bind(this, 1)} className={(this.state.selected === 1) ? 'selected': ''}>
-                    <Link to="/mail" activeClassName="active">
-                        <IconMail size="18" color="#00E676"/>
-                        <span className="name">Mail</span>
-                    </Link>
-                </li>
-                <li onClick={this.handleClick.bind(this, 2)} className={(this.state.selected === 2) ? 'selected': ''}>
-                    <Link to="/widgets" activeClassName="active">
-                        <IconWidgets size="18" color="#7C4DFF"/>
-                        <span className="name">Widgets</span>
-                        &emsp;<span className="badge text-uppercase" style={{'background': '#7C4DFF'}}>10</span>
-                    </Link>
-                </li>
-                <li><div className="nav-list-title">Components</div></li>
-                <li onClick={this.handleClick.bind(this, 3)} className={(this.state.selected === 3) ? 'selected': ''}>
-                    <Link to="">
-                        <IconUI size="18"/>
-                        <span className="name">Elements</span>
-                        <IconDown size="14" className="icon-down"/>
-                    </Link>
-                    <Collapse isOpen={this.state.selected === 3 ? true: false} onClick={this.handleOpen.bind(this, 3)}>
-                        <ul className="inner-drop list-unstyled">
-                            <li><Link to="/ui/buttons" activeClassName="active">Buttons</Link></li>
-                            <li><Link to="/ui/typography" activeClassName="active">Typography</Link></li>
-                            <li><Link to="/ui/cards" activeClassName="active">Cards</Link></li>
-                            <li><Link to="/ui/modals" activeClassName="active">Modals</Link></li>
-                            <li><Link to="/ui/notification" activeClassName="active">Notification</Link></li>
-                            <li><Link to="/ui/extras" activeClassName="active">Extras</Link></li>
-                        </ul>
-                    </Collapse>
-                </li>
-                <li onClick={this.handleClick.bind(this, 4)} className={(this.state.selected === 4) ? 'selected': ''}>
-                    <Link to="">
-                        <IconForm size="18"/>
-                        <span className="name">Forms</span>
-                        <IconDown size="14" className="icon-down"/>
-                    </Link>
-                    <Collapse isOpen={(this.state.selected === 4) ? true : false} onClick={this.handleOpen.bind(this, 4)}>
-                        <ul className="inner-drop list-unstyled">
-                            <li><Link to="/forms/general" activeClassName="active">General</Link></li>
-                            <li><Link to="/forms/advanced" activeClassName="active">Advanced</Link></li>
-                        </ul>
-                    </Collapse>
-                </li>
-                <li onClick={this.handleClick.bind(this, 5)} className={(this.state.selected === 5) ? 'selected': ''}>
-                    <Link to="/charts" activeClassName="active">
-                        <IconChart size="18"/>
-                        <span className="name">Charts</span>
-                        &emsp;<span className="badge badge-primary badge-chart text-uppercase">mixed</span>
-                    </Link>
-                </li>
-                <li onClick={this.handleClick.bind(this, 6)} className={(this.state.selected === 6) ? 'selected': ''}>
-                    <Link to="/tables" activeClassName="active">
-                        <IconTable size="18"/><span className="name">Tables</span>
-                    </Link>
-                </li>
-                <li onClick={this.handleClick.bind(this, 7)} className={(this.state.selected === 7) ? 'selected': ''}>
-                    <Link to="">
-                        <IconPages size="18"/>
-                        <span className="name">Pages</span>
-                        <IconDown size="14" className="icon-down"/>
-                    </Link>
-                    <Collapse isOpen={(this.state.selected === 7) ? true : false} onClick={this.handleOpen.bind(this, 7)}>
-                        <ul className="inner-drop list-unstyled">
-                            <li><Link to="/pages/signin" activeClassName="active">Sign In</Link></li>
-                            <li><Link to="/pages/register" activeClassName="active">Register</Link></li>
-                            <li><Link to="/pages/forget" activeClassName="active">Forget Pass</Link></li>
-                            <li><Link to="/pages/404" activeClassName="active">404</Link></li>
-                            <li><Link to="/pages/invoice" activeClassName="active">Invoice</Link></li>
-                        </ul>
-                    </Collapse>
-                </li>
+                <li><Link to="/pages/signin" activeClassName="active">Sign In</Link></li>
+                <li><Link to="/pages/register" activeClassName="active">Register</Link></li>
             </ul>
+
+                {/*<li onClick={this.handleClick.bind(this, 1)} className={(this.state.selected === 1) ? 'selected': ''}>*/}
+                    {/*<Link to="/mail" activeClassName="active">*/}
+                        {/*<IconMail size="18" color="#00E676"/>*/}
+                        {/*<span className="name">Mail</span>*/}
+                    {/*</Link>*/}
+                {/*</li>*/}
+                {/*<li onClick={this.handleClick.bind(this, 2)} className={(this.state.selected === 2) ? 'selected': ''}>*/}
+                    {/*<Link to="/widgets" activeClassName="active">*/}
+                        {/*<IconWidgets size="18" color="#7C4DFF"/>*/}
+                        {/*<span className="name">Widgets</span>*/}
+                        {/*&emsp;<span className="badge text-uppercase" style={{'background': '#7C4DFF'}}>10</span>*/}
+                    {/*</Link>*/}
+                {/*</li>*/}
+                {/*<li><div className="nav-list-title">Components</div></li>*/}
+                {/*<li onClick={this.handleClick.bind(this, 3)} className={(this.state.selected === 3) ? 'selected': ''}>*/}
+                    {/*<Link to="">*/}
+                        {/*<IconUI size="18"/>*/}
+                        {/*<span className="name">Elements</span>*/}
+                        {/*<IconDown size="14" className="icon-down"/>*/}
+                    {/*</Link>*/}
+                    {/*<Collapse isOpen={this.state.selected === 3 ? true: false} onClick={this.handleOpen.bind(this, 3)}>*/}
+                        {/*<ul className="inner-drop list-unstyled">*/}
+                            {/*<li><Link to="/ui/buttons" activeClassName="active">Buttons</Link></li>*/}
+                            {/*<li><Link to="/ui/typography" activeClassName="active">Typography</Link></li>*/}
+                            {/*<li><Link to="/ui/cards" activeClassName="active">Cards</Link></li>*/}
+                            {/*<li><Link to="/ui/modals" activeClassName="active">Modals</Link></li>*/}
+                            {/*<li><Link to="/ui/notification" activeClassName="active">Notification</Link></li>*/}
+                            {/*<li><Link to="/ui/extras" activeClassName="active">Extras</Link></li>*/}
+                        {/*</ul>*/}
+                    {/*</Collapse>*/}
+                {/*</li>*/}
+                {/*<li onClick={this.handleClick.bind(this, 4)} className={(this.state.selected === 4) ? 'selected': ''}>*/}
+                    {/*<Link to="">*/}
+                        {/*<IconForm size="18"/>*/}
+                        {/*<span className="name">Forms</span>*/}
+                        {/*<IconDown size="14" className="icon-down"/>*/}
+                    {/*</Link>*/}
+                    {/*<Collapse isOpen={(this.state.selected === 4) ? true : false} onClick={this.handleOpen.bind(this, 4)}>*/}
+                        {/*<ul className="inner-drop list-unstyled">*/}
+                            {/*<li><Link to="/forms/general" activeClassName="active">General</Link></li>*/}
+                            {/*<li><Link to="/forms/advanced" activeClassName="active">Advanced</Link></li>*/}
+                        {/*</ul>*/}
+                    {/*</Collapse>*/}
+                {/*</li>*/}
+                {/*<li onClick={this.handleClick.bind(this, 5)} className={(this.state.selected === 5) ? 'selected': ''}>*/}
+                    {/*<Link to="/charts" activeClassName="active">*/}
+                        {/*<IconChart size="18"/>*/}
+                        {/*<span className="name">Charts</span>*/}
+                        {/*&emsp;<span className="badge badge-primary badge-chart text-uppercase">mixed</span>*/}
+                    {/*</Link>*/}
+                {/*</li>*/}
+                {/*<li onClick={this.handleClick.bind(this, 6)} className={(this.state.selected === 6) ? 'selected': ''}>*/}
+                    {/*<Link to="/tables" activeClassName="active">*/}
+                        {/*<IconTable size="18"/><span className="name">Tables</span>*/}
+                    {/*</Link>*/}
+                {/*</li>*/}
+                {/*<li onClick={this.handleClick.bind(this, 7)} className={(this.state.selected === 7) ? 'selected': ''}>*/}
+                    {/*<Link to="">*/}
+                        {/*<IconPages size="18"/>*/}
+                        {/*<span className="name">Pages</span>*/}
+                        {/*<IconDown size="14" className="icon-down"/>*/}
+                    {/*</Link>*/}
+                    {/*<Collapse isOpen={(this.state.selected === 7) ? true : false} onClick={this.handleOpen.bind(this, 7)}>*/}
+                        {/*<ul className="inner-drop list-unstyled">*/}
+                            {/*<li><Link to="/pages/signin" activeClassName="active">Sign In</Link></li>*/}
+                            {/*<li><Link to="/pages/register" activeClassName="active">Register</Link></li>*/}
+                            {/*<li><Link to="/pages/forget" activeClassName="active">Forget Pass</Link></li>*/}
+                            {/*<li><Link to="/pages/404" activeClassName="active">404</Link></li>*/}
+                            {/*<li><Link to="/pages/invoice" activeClassName="active">Invoice</Link></li>*/}
+                        {/*</ul>*/}
+                    {/*</Collapse>*/}
+                {/*</li>*/}
+            {/*</ul>*/}
             {/* end scroll-area */}
         </ScrollArea>
     }

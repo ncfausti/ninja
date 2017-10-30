@@ -2,9 +2,13 @@ import React from 'react';
 import 'recharts';
 
 import { PieChart, Pie, Sector, Cell } from 'recharts';
-const data = [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-                  {name: 'Group C', value: 300}, {name: 'Group D', value: 200}];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const data = [    {name: 'Negative', value: 200},
+    {name: 'Neutral', value: 100},
+    {name: 'Positive', value: 400},
+
+];
+const COLORS = ['#FF0000', '#FFBB44', '#00CC77'];
+
 
 const RADIAN = Math.PI / 180;                    
 
