@@ -2,22 +2,29 @@ import React from 'react';
 import 'recharts';
 
 import { PieChart, Pie, Sector, Cell } from 'recharts';
-const data = [    {name: 'Negative', value: 200},
+
+const COLORS = ['#FF0000', '#33ee88', '#00CC77'];
+
+const data = [{name: 'Positive', value: 400},
     {name: 'Neutral', value: 100},
-    {name: 'Positive', value: 400},
-
-];
-const COLORS = ['#FF0000', '#FFBB44', '#00CC77'];
-
-
+    {name: 'Negative', value: 300},];
 const RADIAN = Math.PI / 180;                    
 
 export default class HalfDonutChart extends React.Component{
+    onPieEnter = (data, index) => {
+        this.setState({
+            activeIndex: index,
+        });
+    }
 	render () {
+	    try{
+        console.log("sentiment data " + this.props.data[1].name + this.props.data[1].value);
+        }
+        catch(e) {}
   	return (
-    	<PieChart width={600} height={300} onMouseEnter={this.onPieEnter}>
+    	<PieChart width={700} height={200} onMouseEnter={this.onPieEnter}>
         <Pie
-          data={data} 
+          data={this.props.data}
           cx={240}
           cy={130}
           startAngle={180}
@@ -28,7 +35,7 @@ export default class HalfDonutChart extends React.Component{
           paddingAngle={5}
         >
           {
-            data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+            this.props.data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
           }
         </Pie>
       </PieChart>

@@ -14,7 +14,7 @@ export default class DonutChart extends React.Component{
   	return (
     	<PieChart width={600} height={300} onMouseEnter={this.onPieEnter}>
         <Pie
-          data={data} 
+          data={this.props.data}
           cx={240}
           cy={130}
           innerRadius={90}

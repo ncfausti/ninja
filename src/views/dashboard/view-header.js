@@ -33,20 +33,20 @@ export default () => (
             <h1 className="h5 title text-uppercase">Kiva</h1>
             <p className="mb-0 subtitle text-nowrap">Latest social media statistics&nbsp;<span className="hidden-sm-down">&amp; summary</span></p>
         </header>
-        <div className="ml-auto d-flex mt-2">
-            <div className="hidden-sm-down">
-                <LineChart width={100} height={35} data={tinyChartData}>
-                    <Line type='monotone' dataKey='growth' stroke='#FFEA00' strokeWidth={1} dot={{strokeWidth: 0, r: 2}}/>
-                    <Tooltip content={<IncomeGrowthTooltip/>}/>
-                </LineChart>
-                <p className="small text-uppercase text-white">Income Growth</p>
-            </div>
-            <div className="ml-5">
-                <BarChart width={100} height={35} data={tinyChartData}>
-                    <Bar type='monotone' dataKey='traffic' fill='#FFEA00'/>
-                </BarChart>
-                <p className="small text-uppercase text-white text-nowrap">Weekly Traffic</p>
-            </div>
-        </div>
+        {/*<div className="ml-auto d-flex mt-2 invisible">*/}
+            {/*<div className="hidden-sm-down">*/}
+                {/*<LineChart width={100} height={35} data={tinyChartData}>*/}
+                    {/*<Line type='monotone' dataKey='growth' stroke='#FFEA00' strokeWidth={1} dot={{strokeWidth: 0, r: 2}}/>*/}
+                    {/*<Tooltip content={<IncomeGrowthTooltip/>}/>*/}
+                {/*</LineChart>*/}
+                {/*<p className="small text-uppercase text-white">Income Growth</p>*/}
+            {/*</div>*/}
+            {/*<div className="ml-5">*/}
+                {/*<BarChart width={100} height={35} data={tinyChartData}>*/}
+                    {/*<Bar type='monotone' dataKey='traffic' fill='#FFEA00'/>*/}
+                {/*</BarChart>*/}
+                {/*<p className="small text-uppercase text-white text-nowrap">Weekly Traffic</p>*/}
+            {/*</div>*/}
+        {/*</div>*/}
     </div>
 );

@@ -1,8 +1,17 @@
+import { createStore } from 'redux'
+import todoApp from './reducers'
 import React from 'react';
 import Nav from './shared/components/nav';
 import SiteHead from './shared/components/header';
-
 import './app.css';
+
+let store = createStore(todoApp)
+
+console.log(store.getState())
+
+const unsubscribe = store.subscribe(() =>
+    console.log(store.getState())
+)
 
 export default class App extends React.Component {
     constructor(props) {

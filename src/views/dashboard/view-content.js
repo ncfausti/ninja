@@ -23,6 +23,8 @@ import {StackedAreaChart} from "../../shared/components/StackedAreaChart";
 import CalculatorForm from "../../shared/components/CalculatorForm";
 import HalfDonutChart from "../../shared/components/HalfDonutChart";
 import DonutChart from "../../shared/components/DonutChart";
+import axios from 'axios';
+import { BarChart, Bar } from 'recharts';
 
 
 // Sales Chart
@@ -190,249 +192,618 @@ const TransactionTable = ({data}) => (
 // ----------
 // const SalesCard = () => (
 //
-class SalesCard extends React.Component {
-        constructor() {
-            super();
-            this.state = {
-                followers: 1000,
-                facebook: 1000,
-                articles: 1000,
-                forums: 1000,
-                tweets: 1000,
-                sentiment: 1000,
-                dispenseries: 1000,
-                areaChartData: [
 
-                    // social media shares, by month
-                    // init with static data
+const socialBreakdown = [
+    {name:"Tweets",val:300},
+    {name:"Followers", val:200},
+    {name:"Forums", val:200},
+    {name:"Articles", val:200},
+    {name:"Dispensaries", val:200},
+    {name:"Sentiment Rating", val:200},
+]
 
-                    {
-                        name: 'September', Twitter: 7700, Facebook: 400,
-                        Articles: 500, Forums: 600, Tweets: 600, Sentiment: 650, Dispensaries: 700,
-                        lineChart: 3500
-                    },
+class SocialCard extends React.Component {
+    constructor(props) {
+        super(props)
 
-                    {
-                        name: 'October', Twitter: 2200, Facebook: 500,
-                        Articles: 600, Forums: 700, Tweets: 600, Sentiment: 650, Dispensaries: 700,
-                        lineChart: 3200
-                    },
-
-                    {
-                        name: 'November', Twitter: 2300, Facebook: 600,
-                        Articles: 700, Forums: 800, Tweets: 600, Sentiment: 650, Dispensaries: 700,
-                        lineChart: 3700
-                    },
-
-                    {
-                        name: 'December', Twitter: 1150, Facebook: 370,
-                        Articles: 400, Forums: 500, Tweets: 500, Sentiment: 650, Dispensaries: 700,
-                        lineChart: 3400
-                    }
-                ],
-
-            }
+    }
+        onPieEnter = (data, index) => {
+            this.setState({
+                activeIndex: index,
+            });
         }
 
-       update(e) {
+        render() {
+            return(
+                <div className={this.props.visibility}>
+                    <CardGroup className="sales-card mb-4">
+                        <Card style={{'flex': '3'}}>
+                            <CardBlock>
+                                <CardTitle className="text-uppercase h3 center">Sentiment Analysis</CardTitle>
+                                <div>
+                                    <HalfDonutChart className={"scaling-svg"}
+                                                    data={this.props.sentimentData} colorData={COLORS} />
+                                </div>
+
+                            </CardBlock>
+                        </Card>
+                        <Card style={{'flex': '2'}}>
+                            <CardBlock>
+                                <CardTitle className="text-uppercase h6">Social Volume</CardTitle>
+                                <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
+                                {/*<CalculatorForm update={this.props.update.bind(this)} />*/}
+                                <StackedAreaChart data={this.props.areaChartData} />
+
+                            </CardBlock>
+
+                        </Card>
+                    </CardGroup>
+                    <Row>
+                        <div className="mb-4 col-sm-12 col-md-6">
+                            <Card>
+                                <CardBlock>
+                                    <CardTitle className="text-uppercase h3 center">Your Social Breakdown</CardTitle>
+                                    <div> {/*<DonutChart className={"scaling-svg"} data={[{name: 'Positive', value: 400},*/}
+                                        {/*{name: 'Neutral', value: 100},*/}
+                                        {/*{name: 'Negative', value: 100}]} />*/}
+
+                                        <table className="table table-bordered">
+                                            <tbody>
+                                            {socialBreakdown.map( (k,v) => <tr>
+                                                <td>{k.name}</td>
+                                                <td colSpan={1}>
+                                                    {k.val}
+                                                </td>
+                                            </tr>)}
+                                            </tbody>
+                                        </table>
+
+                                    {/*<CalculatorForm update={this.props.update.bind(this)} />*/}
+
+                        </div>
+                                </CardBlock>
+                            </Card>
+                        </div>
+                        {/* traffic source */}
+                        <div className="mb-4 col-sm-12 col-md-6">
+                            <Card>
+                                <CardBlock>
+
+                                </CardBlock>
+                            </Card>
+                        </div>
+                    </Row>
+                </div>
+                );
+        }
+}
+
+class PerformanceCard extends React.Component {
+    constructor(props) {
+        super(props)
+
+    }
+    // onPieEnter = (data, index) => {
+    //     this.setState({
+    //         activeIndex: index,
+    //     });
+    // }
+
+    render() {
+        return(
+                <div className={this.props.visibility}>
+                    <CardGroup className="sales-card mb-4">
+                        <Card style={{'flex': '3'}}>
+                            <CardBlock>
+                                <CardTitle className="text-uppercase h6">National Brandshare</CardTitle>
+                                <div className="small mb-4 card-subtitle">Growth over time</div>
+                                <div style={{width: '100%', height: '280px'}}>
+                                    {/*<SalesDataChart/>*/}
+                                    <StackedAreaChart data={this.props.areaChartData} />
+                                </div>
+                            </CardBlock>
+                        </Card>
+                        <Card style={{'flex': '2'}}>
+                            <CardBlock>
+                                <CardTitle className="text-uppercase h6">Brandshare Calculator</CardTitle>
+                                <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
+                                <CalculatorForm update={this.props.update.bind(this)} />
+                            </CardBlock>
+                        </Card>
+                    </CardGroup>
+                </div>
+            );
+        }
+}
+const COLORS = ['#00CC77', '#FF0000', '#FFBB44'];
+
+const TinyBarChart = ({data}) => (
+    <div>
+        <BarChart width={300} height={60} data={data} layout={"vertical"}>
+            <XAxis type="number"/>
+            <YAxis type="category" dataKey="name" />
+            <Bar type="monotone" dataKey="% Posters" fill={"#00c853"} />
+            <Bar type="monotone" dataKey="% Followers" fill={"#2962ff"} />
+
+            <Tooltip />
+        </BarChart>
+        <div className="ml-2 small">Bar Chart</div>
+    </div>
+);
+
+
+const male = [
+    {'% Posters': 23},
+    {'% Followers': 43,},
+];
+const female = [
+    {'% Posters': 77},
+    {'% Followers': 57,},
+];
+const millennials = [
+    {'% Posters': 23},
+    {'% Followers': 17,},
+];
+const genX = [
+    {'% Posters': 44},
+    {'% Followers': 42,},
+];
+const babyBoomers = [
+    {'% Posters': 33},
+    {'% Followers': 41,},
+];
+
+const yogis = [
+    {'% Posters': 23},
+    {'% Followers': 44,},
+];
+const partiers = [
+    {'% Posters': 1},
+    {'% Followers': 4,},
+];
+
+
+
+class PersonaCard extends React.Component {
+    constructor(props) {
+        super(props)
+
+    }
+
+    render() {
+        return(
+            <div className={this.props.visibility}>
+                <CardGroup className="sales-card mb-4">
+                    <Card style={{'flex': '3'}}>
+                        <CardBlock>
+                            <CardTitle className="text-uppercase h5 center">Social Activity</CardTitle>
+                            <table className="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">% Posters</th>
+                                    <th scope="col">% Followers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Male</td>
+                                    <td colSpan={2}>
+
+                                        <TinyBarChart data={male} />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Female</td>
+
+                                    <td colSpan={2}>
+
+                                        <TinyBarChart data={female} />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Millennials</td>
+
+                                    <td colSpan={2}>
+
+                                        <TinyBarChart data={millennials} />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Gen Xers</td>
+
+                                    <td colSpan={2}>
+
+                                        <TinyBarChart data={genX} />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Baby Boomers</td>
+                                    <td colSpan={2}>
+
+                                        <TinyBarChart data={babyBoomers} />
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </CardBlock>
+                    </Card>
+                    <Card style={{'flex': '2'}}>
+                        <CardBlock>
+                            <CardTitle className="text-uppercase h5">Personas</CardTitle>
+                            {/*<div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>*/}
+                            {/*<CalculatorForm update={this.props.update.bind(this)} />*/}
+                            <table className="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">% Posters</th>
+                                    <th scope="col">% Followers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Yogis</td>
+                                    <td colSpan={2}>
+
+                                        <TinyBarChart data={yogis} />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Partiers</td>
+
+                                    <td colSpan={2}>
+
+                                        <TinyBarChart data={partiers} />
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </CardBlock>
+                    </Card>
+                </CardGroup>
+            </div>
+        );}
+}
+
+
+// export default () => (
+export default class ViewContent extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            quarters: [{}, {}, {}, {}, {}, {}, {}], // 7 quarters
+            followers: 1000,
+            facebook: 1000,
+            articles: 1000,
+            forums: 1000,
+            tweets: 1000,
+            sentiment: 1000,
+            dispenseries: 1000,
+            areaChartData: [
+
+                // social media shares, by month
+                // init with static data
+
+            ],
+            socialVis: "visible",
+            performVis: "invisible",
+            personaVis: "invisible",
+            sentimentChartData: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get(`http://ec2-54-81-225-19.compute-1.amazonaws.com/brand?name=kiva`)
+            .then(res => {
+                //console.log(quarters);
+                //console.log(dbRow);
+
+                console.log(res.data[0]);
+                let quarters = [{}, {}, {}, {}, {}, {}, {}, {}];
+                // let dbRow = {
+                //     brand: "",
+                //     quarter: "",
+                //     composite: "",
+                //     negative: "",
+                //     neutral: "",
+                //     positive: "",
+                //     negative_n: "",
+                //     neutral_n: "",
+                //     positive_n: "",
+                //     n_sentiment: "",
+                //     forums: "",
+                //     forums_accumulated: "",
+                //     professional: "",
+                //     professional_notime: "",
+                //     professional_accumulate: "",
+                //     twitter: "",
+                //     tweets_cumulative: "",
+                //     bs_concentrates: "",
+                //     bs_edibles: "",
+                //     bd_other: "",
+                //     bd_average: "",
+                //     dispensary: "",
+                //     brand_twitter: "",
+                //     followers_twitter: "",
+                //     average_monthly_sku: "",
+                //     Notes3: ""
+                // };
+                // let cols = ["brand",
+                //     "quarter",
+                //     "composite",
+                //     "negative",
+                //     "neutral",
+                //     "positive",
+                //     "negative_n",
+                //     "neutral_n",
+                //     "positive_n",
+                //     "n_sentiment",
+                //     "forums",
+                //     "forums_accumulated",
+                //     "professional",
+                //     "professional_notime",
+                //     "professional_accumulate",
+                //     "twitter",
+                //     "tweets_cumulative",
+                //     "bs_concentrates",
+                //     "bs_edibles",
+                //     "bd_other",
+                //     "bd_average",
+                //     "dispensary",
+                //     "brand_twitter",
+                //     "followers_twitter",
+                //     "average_monthly_sku",
+                //     "Notes3"];
+
+                let dbRow = {
+                    brand:"",
+                    quarter:"",
+                    date:"",
+                    composite:"",
+                    negative:"",
+                    slight_pos:"",
+                    very_positive:"",
+                    total_positive:"",
+                    negative_n:"",
+                    slight_pos_n:"",
+                    very_pos_n:"",
+                    n_sentiment:"",
+                    forums:"",
+                    forums2:"",
+                    forums_accumulated:"",
+                    forums_mean:"",
+                    forums_total:"",
+                    professional:"",
+                    prof_accumulate:"",
+                    prof_mean:"",
+                    prof_total:"",
+                    tweets:"",
+                    tweets_accumulate:"",
+                    tweet_mean:"",
+                    tweet_total:"",
+                    followers_twitter:"",
+                    social_volume:"",
+                    dispensary:"",
+                    sku:"",
+                    all_sku:"",
+                    edible_sku:"",
+                    cali_sku:"",
+                    bs_edibles:"",
+                    bs_mean_state:"",
+                    bs_mean_national:"",
+                    sku_predict:"",
+                    sku_predict3:"",
+                }
+
+                let cols = ["brand",
+                    "quarter",
+                    "date",
+                    "composite",
+                    "negative",
+                    "slight_pos",
+                    "very_positive",
+                    "total_positive",
+                    "negative_n",
+                    "slight_pos_n",
+                    "very_pos_n",
+                    "n_sentiment",
+                    "forums",
+                    "forums2",
+                    "forums_accumulated",
+                    "forums_mean",
+                    "forums_total",
+                    "professional",
+                    "prof_accumulate",
+                    "prof_mean",
+                    "prof_total",
+                    "tweets",
+                    "tweets_accumulate",
+                    "tweet_mean",
+                    "tweet_total",
+                    "followers_twitter",
+                    "social_volume",
+                    "dispensary",
+                    "sku",
+                    "all_sku",
+                    "edible_sku",
+                    "cali_sku",
+                    "bs_edibles",
+                    "bs_mean_state",
+                    "bs_mean_national",
+                    "sku_predict",
+                    "sku_predict3"];
+
+                let areaChartData = [];
+                let sentimentChartData = [];
+                let composite = 0;
+                let neg = 0;
+                let neutral = 0;
+                let pos = 0;
+                let socialBreakdown = [];
+
+                for (let i = 0; i < res.data.length; i++) {
+                    for (let j = 0; j < cols.length; j++) {
+                        console.log(quarters[i]);
+
+                        quarters[i][cols[j]] = res.data[i][j];
+                        console.log(quarters[i]);
+
+                        if (i === res.data.length - 1) {
+                            composite = quarters[i]['composite'];
+                            neg = quarters[i]['negative'];
+                            neutral = quarters[i]['neutral'];
+                            pos = quarters[i]['positive'];
+                        }
+                    }
+                    areaChartData.push({
+                        name: "Q" + quarters[i]["quarter"],
+                        Twitter: quarters[i]["twitter"],
+                        Dispensaries: quarters[i]["dispensary"],
+                        Forums: quarters[i]["forums"],
+                        Professional: quarters[i]["professional"],
+                        AvgSKU: quarters[i]["average_monthly_sku"],
+
+                    });
+
+                    if(i === res.data.length - 2) {
+                        sentimentChartData.push(
+                            {name:"negative", value: parseInt(quarters[i]["negative"])},//,
+                            {name:"slight_pos", value: parseInt(quarters[i]["slight_pos"])},
+                            {name:"very_positive", value: parseInt(quarters[i]["very_positive"])},
+                        )
+                    }
+                }
+                console.log("SENTIMENT DATA" + sentimentChartData);
+
+                this.setState({composite});
+                this.setState({neg});
+                this.setState({neutral});
+                this.setState({pos});
+
+                this.setState({areaChartData});
+                this.setState({sentimentChartData});
+
+            });
+    }
+
+    switchCard(e) {
+        if(e.target.id == "socialLink") {
+            console.log("social")
+            this.setState({socialVis: "visible"})
+            this.setState({performVis: "invisible"})
+            this.setState({personaVis: "invisible"})
+        }
+        else if(e.target.id == "perfLink") {
+            console.log('perfLink')
+            this.setState({socialVis: "invisible"})
+            this.setState({performVis: "visible"})
+            this.setState({personaVis: "invisible"})
+        }
+        else if(e.target.id == "persLink") {
+            console.log("perso")
+            this.setState({socialVis: "invisible"})
+            this.setState({performVis: "invisible"})
+            this.setState({personaVis: "visible"})
+        }
+
+    }
+    update(e) {
         let totals = [];
         // calc numbers
         console.log(e.target.id + " : " + e.target.value);
-        this.setState({[e.target.id]:e.target.value});
+        this.setState({[e.target.id]: e.target.value});
         // use refs here
 
-        this.setState({areaChartData: [
-            {name: 'September', Twitter: 3300, Facebook: 600, Articles: 700, Forums:800 },
-            {name: 'October', Twitter: 1500, Facebook: 400, Articles: 500, Forums:600},
-            {name: 'November', Twitter: 2200, Facebook: 500, Articles: 600, Forums:700},
-            {name: 'December', Twitter: this.state.followers, Facebook: this.state.facebook,
-                Articles: this.state.articles, Forums: this.state.forums},
+        // And then for the calculator here is the
+        // formula:
+        // Actual SKU = 50(quarter) 57(Professional) 1.6(forums_total)
+        // + 1114.4(composite) + .003(twitter * dispensary)
+        // + .07 (followers * twitter) + 232
+        let tmpAreaChart = this.state.areaChartData;
 
-        ]});
+        this.setState({
+            areaChartData: [
+                {
+                    name: 'Q1 2016', Twitter: this.state.followers, Facebook: this.state.facebook,
+                    Articles: this.state.articles, Forums: this.state.forums
+                },
+                {
+                    name: 'Q2', Twitter: this.state.followers, Facebook: this.state.facebook,
+                    Articles: this.state.articles, Forums: this.state.forums
+                },
+                {
+                    name: 'Q3', Twitter: this.state.followers, Facebook: this.state.facebook,
+                    Articles: this.state.articles, Forums: this.state.forums
+                },
+                {
+                    name: 'Q4', Twitter: this.state.followers, Facebook: this.state.facebook,
+                    Articles: this.state.articles, Forums: this.state.forums
+                },
+                {
+                    name: 'Q5', Twitter: this.state.followers, Facebook: this.state.facebook,
+                    Articles: this.state.articles, Forums: this.state.forums
+                },
+                {
+                    name: 'Q6', Twitter: this.state.followers, Facebook: this.state.facebook,
+                    Articles: this.state.articles, Forums: this.state.forums
+                },
+                {
+                    name: 'Q7', Twitter: 10000, Facebook: this.state.facebook,
+                    Articles: this.state.articles, Forums: this.state.forums
+                }
+            ]
+        });
 
         // this.setState({areaChartData:[
         //     {name: 'October', Twitter: e.target.value, Facebook: 400, Articles: 500, Forums:600},
         //     {name: 'November', Twitter: 2200, Facebook: 500, Articles: 600, Forums:700},
         //     {name: 'December', Twitter: 3300, Facebook: 600, Articles: 700, Forums:800},
         //     {name: 'January', Twitter: 5000, Facebook: 700, Articles: 799, Forums: 800}]});
-        }
+    }
 
-        // onPieEnter = (data, index) => {
-        //     this.setState({
-        //         activeIndex: index,
-        //     });
-        // }
 
-        render() {
-            return(
-    <CardGroup className="sales-card mb-4">
-        <Card style={{'flex': '3'}}>
-            <CardBlock>
-                <CardTitle className="text-uppercase h6">Your Brandshares</CardTitle>
-                <div className="small mb-4 card-subtitle">Growth over time</div>
-                <div style={{width: '100%', height: '280px'}}>
-                    {/*<SalesDataChart/>*/}
-                    <StackedAreaChart data={this.state.areaChartData} />
-                </div>
-            </CardBlock>
-        </Card>
-        <Card style={{'flex': '2'}}>
-            <CardBlock>
-                <CardTitle className="text-uppercase h6">Brandshare Calculator</CardTitle>
-                <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
-                <CalculatorForm update={this.update.bind(this)} />
-            </CardBlock>
-        </Card>
-    </CardGroup>
-);}
+    render() {
+        return (
+            <div className="view-content view-dashboard">
+                <CardNav switchCard={this.switchCard.bind(this)}/>
+                <SocialCard visibility={this.state.socialVis} areaChartData={this.state.areaChartData}
+                            update={this.update.bind(this)} sentimentData={this.state.sentimentChartData} />
+
+                <PerformanceCard visibility={this.state.performVis} areaChartData={this.state.areaChartData}
+                                 update={this.update.bind(this)} sentimentData={this.state.sentimentChartData}/>
+
+                <PersonaCard visibility={this.state.personaVis} areaChartData={this.state.areaChartData}
+                             update={this.update.bind(this)} sentimentData={this.state.sentimentChartData}/>
+            </div>
+        )
+    }
 }
 
+class CardNav extends React.Component {
+    constructor(props) {
+        super(props)
 
-export default () => (
-    <div className="view-content view-dashboard">
-        <SalesCard/>
+    }
 
-        <Row>
-            {/* blocks */}
-            {/*<div className="col-sm-6 col-md-3">*/}
-                {/*<Card className="mb-4">*/}
-                    {/*<CardBlock>*/}
-                        {/*<CardTitle className="text-uppercase small font-weight-bold">New Visitors</CardTitle>*/}
-                        {/*<div className="d-flex align-items-center">*/}
-                            {/*<h3 className="mr-2 font-weight-normal">2,544</h3>*/}
-                            {/*<div className="small">*/}
-                                {/*<IconLevelDown size="14"/><span className="badge badge-danger">-28%</span>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</CardBlock>*/}
-                    {/*<div style={{width: '100%', height: '60px'}}>*/}
-                        {/*<BlocksChart dataKey="uv" stroke="#69F0AE" fill="#69F0AE"/>*/}
-                    {/*</div>*/}
-                {/*</Card>*/}
+    render() {
+        return (<div className={"card-nav card card-block"}>
+            <ul className={"list-unstyled"}>
+                <li id={"socialLink"} className={"mb-4 col-sm-12 col-md-4"}
+                    onClick={this.props.switchCard.bind(this)}>Social Metrics</li>
+                <li id={"perfLink"} className={"mb-4 col-sm-12 col-md-4"}
+                    onClick={this.props.switchCard.bind(this)}>Key Performance</li>
+                <li id={"persLink"} className={"mb-4 col-sm-12 col-md-4"}
+                    onClick={this.props.switchCard.bind(this)}>Persona</li>
+            </ul>
+        </div>)
+    }
 
-                {/*<Card className="mb-4">*/}
-                    {/*<CardBlock>*/}
-                        {/*<CardTitle className="text-uppercase small font-weight-bold">Bounce Rate</CardTitle>*/}
-                        {/*<div className="d-flex align-items-center">*/}
-                            {/*<h3 className="mr-2 font-weight-normal">65%</h3>*/}
-                            {/*<div className="small">*/}
-                                {/*<IconLevelDown size="14"/><span className="badge badge-danger">-12%</span>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</CardBlock>*/}
-                    {/*<div style={{width: '100%', height: '60px'}}>*/}
-                        {/*<BlocksChart dataKey="br" stroke="#7C4DFF" fill="#7C4DFF"/>*/}
-                    {/*</div>*/}
-                {/*</Card>*/}
-            {/*</div>*/}
-            {/*<div className="col-sm-6 col-md-3">*/}
-                {/*<Card className="mb-4">*/}
-                    {/*<CardBlock>*/}
-                        {/*<CardTitle className="text-uppercase small font-weight-bold">Purchases</CardTitle>*/}
-                        {/*<div className="d-flex align-items-center">*/}
-                            {/*<h3 className="mr-2 font-weight-normal">789</h3>*/}
-                            {/*<div className="small">*/}
-                                {/*<IconLevelUp size="14"/><span className="badge badge-success">+8%</span>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</CardBlock>*/}
-                    {/*<div style={{width: '100%', height: '60px'}}>*/}
-                        {/*<BlocksChart dataKey="sales" stroke="#448AFF" fill="#448AFF"/>*/}
-                    {/*</div>*/}
-                {/*</Card>*/}
-
-                {/*<Card className="mb-4">*/}
-                    {/*<CardBlock>*/}
-                        {/*<CardTitle className="text-uppercase small font-weight-bold">New Sessions</CardTitle>*/}
-                        {/*<div className="d-flex align-items-center">*/}
-                            {/*<h3 className="mr-2 font-weight-normal">2994</h3>*/}
-                            {/*<div className="small">*/}
-                                {/*<IconLevelUp size="14"/><span className="badge badge-success">+19%</span>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</CardBlock>*/}
-                    {/*<div style={{width: '100%', height: '60px'}}>*/}
-                        {/*<BlocksChart dataKey="ns" stroke="#40C4FF" fill="#40C4FF"/>*/}
-                    {/*</div>*/}
-                {/*</Card>*/}
-            {/*</div>*/}
-            <div className="mb-4 col-sm-12 col-md-6">
-                <Card>
-                    <CardBlock>
-                        <CardTitle className="text-uppercase h6">Comments Sentiment</CardTitle>
-                        <div><DonutChart className={"scaling-svg"} />
-                        </div>
-                    </CardBlock>
-                </Card>
-            </div>
-            {/* traffic source */}
-            <div className="mb-4 col-sm-12 col-md-6">
-                <Card>
-                    <CardBlock>
-                        <CardTitle className="text-uppercase h6">Overall Sentiment</CardTitle>
-                        <div><HalfDonutChart className={"scaling-svg"} />
-                        </div>
-                    </CardBlock>
-                </Card>
-            </div>
-        </Row>
-
-        <Row>
-            {/* Recent Activities */}
-            <div className="col-md-5 mb-4">
-                <Card>
-                    <CardBlock>
-                        <CardTitle className="h6 text-uppercase">Recent Tweets</CardTitle>
-                        <div className="small mb-4 card-subtitle">At a glance</div>
-                        <div className="d-flex mb-4 align-items-center">
-                            <IconAndroid size="52"  style={{'border': '1px solid #eee'}} className="mr-3 text-success rounded-circle p-3"/>
-                            <div>
-                                <h6 className="font-weight-semi-bold">Jenna enclosed a doc.</h6>
-                                <div className="small">3 min ago</div>
-                            </div>
-                        </div>
-
-                        <div className="d-flex mb-4 align-items-center">
-                            <IconCardTravel size="52" style={{'border': '1px solid #eee'}} className=" text-info mr-3 rounded-circle p-3"/>
-                            <div>
-                                <h6 className="font-weight-semi-bold">Richard is now out of town.</h6>
-                                <div className="small">1 hour ago</div>
-                            </div>
-                        </div>
-
-                        <div className="d-flex mb-4 align-items-center">
-                            <IconDvr size="52" style={{'border': '1px solid #eee'}} className=" text-danger mr-3 rounded-circle p-3"/>
-                            <div>
-                                <h6 className="font-weight-semi-bold">Your domain will expire in 4 days</h6>
-                                <div className="small">5 hours ago</div>
-                            </div>
-                        </div>
-
-                        <div className="d-flex mb-4 align-items-center">
-                            <IconBalance size="52" style={{'border': '1px solid #eee'}} className=" text-primary mr-3 rounded-circle p-3"/>
-                            <div>
-                                <h6 className="font-weight-semi-bold">Henry just purchased an item</h6>
-                                <div className="small">4 days ago</div>
-                            </div>
-                        </div>
-
-                        <div className="text-right"><button className="btn btn-sm btn-success">View All</button></div>
-                    </CardBlock>
-                </Card>
-            </div>
-
-            {/* Transactions */}
-            <div className="col-md-7 mb-4">
-                <Card>
-                    <CardBlock className="table-responsive">
-                        <CardTitle className="text-uppercase h6">Latest Transactions</CardTitle>
-                        <div className="small mb-4 card-subtitle"><Button color="primary" size="sm">View all</Button></div>
-                        <TransactionTable data={TransactionTableData}/>
-                    </CardBlock>
-                </Card>
-            </div>
-
-        </Row>
-
-    </div>
-)
+}
