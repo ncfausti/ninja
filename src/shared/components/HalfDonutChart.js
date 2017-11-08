@@ -22,7 +22,7 @@ export default class HalfDonutChart extends React.Component{
         }
         catch(e) {}
   	return (
-    	<PieChart width={700} height={200} onMouseEnter={this.onPieEnter}>
+    	<PieChart width={560} height={200} onMouseEnter={this.onPieEnter}>
         <Pie
           data={this.props.data}
           cx={240}

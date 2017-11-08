@@ -194,12 +194,12 @@ const TransactionTable = ({data}) => (
 //
 
 const socialBreakdown = [
-    {name:"Tweets",val:300},
-    {name:"Followers", val:200},
-    {name:"Forums", val:200},
-    {name:"Articles", val:200},
-    {name:"Dispensaries", val:200},
-    {name:"Sentiment Rating", val:200},
+    {name:"Tweets",val:310},
+    {name:"Followers", val:9425},
+    {name:"Forums", val:3},
+    {name:"Articles", val:20},
+    {name:"Dispensaries", val:1506},
+    {name:"Sentiment Rating", val:"97% Positive"},
 ]
 
 class SocialCard extends React.Component {
@@ -217,7 +217,7 @@ class SocialCard extends React.Component {
             return(
                 <div className={this.props.visibility}>
                     <CardGroup className="sales-card mb-4">
-                        <Card style={{'flex': '3'}}>
+                        <Card style={{'flex': '2'}}>
                             <CardBlock>
                                 <CardTitle className="text-uppercase h3 center">Sentiment Analysis</CardTitle>
                                 <div>
@@ -229,8 +229,7 @@ class SocialCard extends React.Component {
                         </Card>
                         <Card style={{'flex': '2'}}>
                             <CardBlock>
-                                <CardTitle className="text-uppercase h6">Social Volume</CardTitle>
-                                <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
+                                <CardTitle className="text-uppercase h3">Social Volume</CardTitle>
                                 {/*<CalculatorForm update={this.props.update.bind(this)} />*/}
                                 <StackedAreaChart data={this.props.areaChartData} />
 
@@ -242,7 +241,7 @@ class SocialCard extends React.Component {
                         <div className="mb-4 col-sm-12 col-md-6">
                             <Card>
                                 <CardBlock>
-                                    <CardTitle className="text-uppercase h3 center">Your Social Breakdown</CardTitle>
+                                    <CardTitle className="text-uppercase h3 center">Your Social <span className="deemphasize">(this quarter)</span></CardTitle>
                                     <div> {/*<DonutChart className={"scaling-svg"} data={[{name: 'Positive', value: 400},*/}
                                         {/*{name: 'Neutral', value: 100},*/}
                                         {/*{name: 'Negative', value: 100}]} />*/}
@@ -251,9 +250,10 @@ class SocialCard extends React.Component {
                                             <tbody>
                                             {socialBreakdown.map( (k,v) => <tr>
                                                 <td>{k.name}</td>
-                                                <td colSpan={1}>
-                                                    {k.val}
-                                                </td>
+                                                <td colSpan={1}>{k.val}</td>
+                                                {k.name === "Sentiment Rating" &&
+                                                <td><span className={"pos"}>{k.val}</span></td>
+                                                }
                                             </tr>)}
                                             </tbody>
                                         </table>
@@ -268,7 +268,7 @@ class SocialCard extends React.Component {
                         <div className="mb-4 col-sm-12 col-md-6">
                             <Card>
                                 <CardBlock>
-
+                                    <img src={"wordclouds/main_wordle.png"} />
                                 </CardBlock>
                             </Card>
                         </div>
@@ -318,7 +318,7 @@ class PerformanceCard extends React.Component {
 const COLORS = ['#00CC77', '#FF0000', '#FFBB44'];
 
 const TinyBarChart = ({data}) => (
-    <div>
+    <div className={"tinyChartWrapper"}>
         <BarChart width={300} height={60} data={data} layout={"vertical"}>
             <XAxis type="number"/>
             <YAxis type="category" dataKey="name" />
@@ -374,10 +374,10 @@ class PersonaCard extends React.Component {
         return(
             <div className={this.props.visibility}>
                 <CardGroup className="sales-card mb-4">
-                    <Card style={{'flex': '3'}}>
+                    <Card style={{'flex': '2'}}>
                         <CardBlock>
                             <CardTitle className="text-uppercase h5 center">Social Activity</CardTitle>
-                            <table className="table table-bordered">
+                            <table className="table table-bordered centered">
                                 <thead>
                                 <tr>
                                     <th scope="col"></th>
@@ -387,7 +387,7 @@ class PersonaCard extends React.Component {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Male</td>
+                                    <td><img src={"icons/male.png"} width={"25%"} /><br />Male</td>
                                     <td colSpan={2}>
 
                                         <TinyBarChart data={male} />
@@ -395,7 +395,7 @@ class PersonaCard extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Female</td>
+                                    <td><img src={"icons/female.png"} width={"25%"} /><br />Female</td>
 
                                     <td colSpan={2}>
 
@@ -404,7 +404,7 @@ class PersonaCard extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Millennials</td>
+                                    <td><img src={"icons/millenial.png"} width={"25%"} /><br />Millennials</td>
 
                                     <td colSpan={2}>
 
@@ -413,7 +413,7 @@ class PersonaCard extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Gen Xers</td>
+                                    <td><img src={"icons/genX.png"} width={"25%"} /><br />Gen Xers</td>
 
                                     <td colSpan={2}>
 
@@ -422,7 +422,7 @@ class PersonaCard extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Baby Boomers</td>
+                                    <td><img src={"icons/baby-boomer.png"} width={"25%"} /><br />Baby Boomers</td>
                                     <td colSpan={2}>
 
                                         <TinyBarChart data={babyBoomers} />
@@ -448,7 +448,7 @@ class PersonaCard extends React.Component {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Yogis</td>
+                                    <td><img src={"icons/yogi.png"} width={"25%"} /><br />Yogis</td>
                                     <td colSpan={2}>
 
                                         <TinyBarChart data={yogis} />
@@ -456,7 +456,7 @@ class PersonaCard extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Partiers</td>
+                                    <td><img src={"icons/partier.png"} width={"25%"} /><br />Partiers</td>
 
                                     <td colSpan={2}>
 
@@ -664,9 +664,11 @@ export default class ViewContent extends React.Component {
                         }
                     }
                     areaChartData.push({
+                        dates: quarters[i]["date"],
+                        percent: [0,10,20,30,40,50,60,70,80,90,100],
                         name: "Q" + quarters[i]["quarter"],
                         Twitter: quarters[i]["twitter"],
-                        Dispensaries: quarters[i]["dispensary"],
+                   //     Dispensaries: quarters[i]["dispensary"],
                         Forums: quarters[i]["forums"],
                         Professional: quarters[i]["professional"],
                         AvgSKU: quarters[i]["average_monthly_sku"],
@@ -700,18 +702,29 @@ export default class ViewContent extends React.Component {
             this.setState({socialVis: "visible"})
             this.setState({performVis: "invisible"})
             this.setState({personaVis: "invisible"})
+            e.target.classList.add("active");
+            document.getElementById("perfLink").classList.remove("active");
+            document.getElementById("persLink").classList.remove("active");
         }
         else if(e.target.id == "perfLink") {
             console.log('perfLink')
             this.setState({socialVis: "invisible"})
             this.setState({performVis: "visible"})
             this.setState({personaVis: "invisible"})
+            e.target.classList.add("active");
+            document.getElementById("socialLink").classList.remove("active");
+            document.getElementById("persLink").classList.remove("active");
+
         }
         else if(e.target.id == "persLink") {
             console.log("perso")
             this.setState({socialVis: "invisible"})
             this.setState({performVis: "invisible"})
             this.setState({personaVis: "visible"})
+            e.target.classList.add("active");
+            document.getElementById("socialLink").classList.remove("active");
+            document.getElementById("perfLink").classList.remove("active");
+
         }
 
     }

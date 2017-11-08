@@ -4,15 +4,15 @@ import 'recharts';
 import {ComposedChart,AreaChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
 
 export const StackedAreaChart = (props) => (
-
-        <ComposedChart width={600} height={270} data={props.data}
+<div className={"stacked-chart"}>
+        <ComposedChart width={600} height={260} data={props.data}
                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
     	{/*<AreaChart width={600} height={270}*/}
             {/*margin={{top: 10, right: 30, left: 0, bottom: 0}}>*/}
 
 
-                <XAxis hide={false} dataKey="name" scale="point" />
-        <YAxis/>
+                <XAxis hide={false} dataKey="dates" scaleToFit={true} textAnchor={"end"} angle={-5} scale="point" />
+        <YAxis dataKey="percent"/>
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip/>
         <Area type='monotone' dataKey='Twitter' stackId="1" stroke='rgb(70,160,236)' fill='rgb(70,160,236)' />
@@ -25,5 +25,6 @@ export const StackedAreaChart = (props) => (
       {/*</AreaChart>*/}
         <Line type='monotone' dataKey='AvgSKU'  stroke='#ff0000'/>
     </ComposedChart>
+    </div>
     );
 
