@@ -6,23 +6,13 @@ import {
     ResponsiveContainer
 } from 'recharts';
 import {
-    CardGroup, Card, CardBlock, CardTitle, Row, Button
+    CardGroup, Card, CardBlock, CardTitle, Row
 } from 'reactstrap';
 
-// icons
-import IconDollar from 'react-icons/lib/fa/dollar';
-import IconTrendUp from 'react-icons/lib/md/trending-up';
-import IconLevelUp from 'react-icons/lib/fa/level-up';
-import IconLevelDown from 'react-icons/lib/fa/level-down';
-import IconAndroid from 'react-icons/lib/fa/android';
-import IconCardTravel from 'react-icons/lib/md/card-travel';
-import IconDvr from 'react-icons/lib/md/dvr';
-import IconBalance from 'react-icons/lib/md/account-balance';
 import IconDot from 'react-icons/lib/md/fiber-manual-record';
 import {StackedAreaChart} from "../../shared/components/StackedAreaChart";
 import CalculatorForm from "../../shared/components/CalculatorForm";
 import HalfDonutChart from "../../shared/components/HalfDonutChart";
-import DonutChart from "../../shared/components/DonutChart";
 import axios from 'axios';
 import { BarChart, Bar } from 'recharts';
 
@@ -196,7 +186,7 @@ const TransactionTable = ({data}) => (
 const socialBreakdown = [
     {name:"Tweets",val:310},
     {name:"Followers", val:9425},
-    {name:"Forums", val:3},
+    {name:"Forums", val:23},
     {name:"Articles", val:20},
     {name:"Dispensaries", val:1506},
     {name:"Sentiment Rating", val:"97% Positive"},
@@ -230,7 +220,6 @@ class SocialCard extends React.Component {
                         <Card style={{'flex': '2'}}>
                             <CardBlock>
                                 <CardTitle className="text-uppercase h3">Social Volume</CardTitle>
-                                {/*<CalculatorForm update={this.props.update.bind(this)} />*/}
                                 <StackedAreaChart data={this.props.areaChartData} />
 
                             </CardBlock>
@@ -241,7 +230,7 @@ class SocialCard extends React.Component {
                         <div className="mb-4 col-sm-12 col-md-6">
                             <Card>
                                 <CardBlock>
-                                    <CardTitle className="text-uppercase h3 center">Your Social <span className="deemphasize">(this quarter)</span></CardTitle>
+                                    <CardTitle className="text-uppercase h3 center">Social Reach <span className="deemphasize">(this quarter)</span></CardTitle>
                                     <div> {/*<DonutChart className={"scaling-svg"} data={[{name: 'Positive', value: 400},*/}
                                         {/*{name: 'Neutral', value: 100},*/}
                                         {/*{name: 'Negative', value: 100}]} />*/}
@@ -258,7 +247,6 @@ class SocialCard extends React.Component {
                                             </tbody>
                                         </table>
 
-                                    {/*<CalculatorForm update={this.props.update.bind(this)} />*/}
 
                         </div>
                                 </CardBlock>
@@ -283,11 +271,6 @@ class PerformanceCard extends React.Component {
         super(props)
 
     }
-    // onPieEnter = (data, index) => {
-    //     this.setState({
-    //         activeIndex: index,
-    //     });
-    // }
 
     render() {
         return(
@@ -307,7 +290,13 @@ class PerformanceCard extends React.Component {
                             <CardBlock>
                                 <CardTitle className="text-uppercase h6">Brandshare Calculator</CardTitle>
                                 <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
-                                <CalculatorForm update={this.props.update.bind(this)} />
+                                <CalculatorForm update={this.props.update.bind(this)} data={this.props.areaChartData}
+                                                dates = {this.props.dates}
+                                                twitter = {this.props.twitter}
+                                                professional = {this.props.professional}
+                                                forums = {this.props.forums}
+                                                sku = {this.props.sku}
+                                />
                             </CardBlock>
                         </Card>
                     </CardGroup>
@@ -436,8 +425,6 @@ class PersonaCard extends React.Component {
                     <Card style={{'flex': '2'}}>
                         <CardBlock>
                             <CardTitle className="text-uppercase h5">Personas</CardTitle>
-                            {/*<div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>*/}
-                            {/*<CalculatorForm update={this.props.update.bind(this)} />*/}
                             <table className="table table-bordered">
                                 <thead>
                                 <tr>
@@ -473,6 +460,7 @@ class PersonaCard extends React.Component {
         );}
 }
 
+function Int(n) {return parseInt(n);}
 
 // export default () => (
 export default class ViewContent extends React.Component {
@@ -483,7 +471,7 @@ export default class ViewContent extends React.Component {
             followers: 1000,
             facebook: 1000,
             articles: 1000,
-            forums: 1000,
+            // forums: 1000,
             tweets: 1000,
             sentiment: 1000,
             dispenseries: 1000,
@@ -496,73 +484,20 @@ export default class ViewContent extends React.Component {
             socialVis: "visible",
             performVis: "invisible",
             personaVis: "invisible",
-            sentimentChartData: []
+            sentimentChartData: [],
+            twitter:[],
+            dates:[],
+            professional:[],
+            forums:[],
+            sku:[]
         }
     }
 
     componentDidMount() {
         axios.get(`http://ec2-54-81-225-19.compute-1.amazonaws.com/brand?name=kiva`)
             .then(res => {
-                //console.log(quarters);
-                //console.log(dbRow);
-
                 console.log(res.data[0]);
                 let quarters = [{}, {}, {}, {}, {}, {}, {}, {}];
-                // let dbRow = {
-                //     brand: "",
-                //     quarter: "",
-                //     composite: "",
-                //     negative: "",
-                //     neutral: "",
-                //     positive: "",
-                //     negative_n: "",
-                //     neutral_n: "",
-                //     positive_n: "",
-                //     n_sentiment: "",
-                //     forums: "",
-                //     forums_accumulated: "",
-                //     professional: "",
-                //     professional_notime: "",
-                //     professional_accumulate: "",
-                //     twitter: "",
-                //     tweets_cumulative: "",
-                //     bs_concentrates: "",
-                //     bs_edibles: "",
-                //     bd_other: "",
-                //     bd_average: "",
-                //     dispensary: "",
-                //     brand_twitter: "",
-                //     followers_twitter: "",
-                //     average_monthly_sku: "",
-                //     Notes3: ""
-                // };
-                // let cols = ["brand",
-                //     "quarter",
-                //     "composite",
-                //     "negative",
-                //     "neutral",
-                //     "positive",
-                //     "negative_n",
-                //     "neutral_n",
-                //     "positive_n",
-                //     "n_sentiment",
-                //     "forums",
-                //     "forums_accumulated",
-                //     "professional",
-                //     "professional_notime",
-                //     "professional_accumulate",
-                //     "twitter",
-                //     "tweets_cumulative",
-                //     "bs_concentrates",
-                //     "bs_edibles",
-                //     "bd_other",
-                //     "bd_average",
-                //     "dispensary",
-                //     "brand_twitter",
-                //     "followers_twitter",
-                //     "average_monthly_sku",
-                //     "Notes3"];
-
                 let dbRow = {
                     brand:"",
                     quarter:"",
@@ -649,30 +584,40 @@ export default class ViewContent extends React.Component {
                 let pos = 0;
                 let socialBreakdown = [];
 
+                let dates = [];
+                let twitter = [];
+                let professional = [];
+                let forums = [];
+                let sku = [];
+                let dispensary = 1;
+
                 for (let i = 0; i < res.data.length; i++) {
                     for (let j = 0; j < cols.length; j++) {
-                        console.log(quarters[i]);
 
                         quarters[i][cols[j]] = res.data[i][j];
-                        console.log(quarters[i]);
 
-                        if (i === res.data.length - 1) {
+                        if (i === res.data.length - 2) {
                             composite = quarters[i]['composite'];
                             neg = quarters[i]['negative'];
                             neutral = quarters[i]['neutral'];
                             pos = quarters[i]['positive'];
                         }
                     }
+
+                    dates.push(quarters[i]["date"]);
+                    twitter.push(quarters[i]["followers_twitter"]);
+                    professional.push(quarters[i]["professional"]);
+                    forums.push(quarters[i]["forums"]);
+                    sku.push(quarters[i]["sku_predict"]);
+
                     areaChartData.push({
                         dates: quarters[i]["date"],
-                        percent: [0,10,20,30,40,50,60,70,80,90,100],
                         name: "Q" + quarters[i]["quarter"],
-                        Twitter: quarters[i]["twitter"],
+                        Twitter: quarters[i]["followers_twitter"],
                    //     Dispensaries: quarters[i]["dispensary"],
-                        Forums: quarters[i]["forums"],
+                        Forums: quarters[i]["forums_total"],
                         Professional: quarters[i]["professional"],
-                        AvgSKU: quarters[i]["average_monthly_sku"],
-
+                        AvgSKU: quarters[i]["sku_predict"],
                     });
 
                     if(i === res.data.length - 2) {
@@ -681,9 +626,28 @@ export default class ViewContent extends React.Component {
                             {name:"slight_pos", value: parseInt(quarters[i]["slight_pos"])},
                             {name:"very_positive", value: parseInt(quarters[i]["very_positive"])},
                         )
+                        dispensary = quarters[i]["dispensary"];
                     }
                 }
-                console.log("SENTIMENT DATA" + sentimentChartData);
+                areaChartData.pop();
+                let i = 6;
+                areaChartData.push({
+                    dates: quarters[7]["date"],
+                    name: "Q7",// + quarters[7]["quarter"],
+                    Twitter: quarters[i]["followers_twitter"],
+                    //     Dispensaries: quarters[i]["dispensary"],
+                    Forums: quarters[i]["forums_total"],
+                    Professional: quarters[i]["professional"],
+                    AvgSKU: quarters[i]["sku_predict"],
+                });
+
+                this.setState({dates});
+                this.setState({twitter});
+                this.setState({professional});
+                this.setState({forums});
+                this.setState({sku});
+                this.setState({dispensary});
+
 
                 this.setState({composite});
                 this.setState({neg});
@@ -726,60 +690,35 @@ export default class ViewContent extends React.Component {
             document.getElementById("perfLink").classList.remove("active");
 
         }
-
     }
+
+
+
     update(e) {
+       // alert(this.state.twitter + " ")
+        let brandshare = (50 * 8 * 57 * (Int(this.state.professional[6])) * 1.6 * Int(this.state.forums[6])
+        + 1114.4 * (Int(this.state.composite) * .01) + .003 * (Int(this.state.twitter[6]) * Int(this.state.dispensary)
+        + .07 * (Int(this.state.followers) * Int(this.state.twitter[6]))) / 340000);
+
+       // alert(brandshare);
+
         let totals = [];
         // calc numbers
         console.log(e.target.id + " : " + e.target.value);
         this.setState({[e.target.id]: e.target.value});
-        // use refs here
+        let tmp = [];
 
-        // And then for the calculator here is the
-        // formula:
-        // Actual SKU = 50(quarter) 57(Professional) 1.6(forums_total)
-        // + 1114.4(composite) + .003(twitter * dispensary)
-        // + .07 (followers * twitter) + 232
-        let tmpAreaChart = this.state.areaChartData;
+        for(var i = 0; i < this.state.areaChartData.length - 1; i++) {
+            tmp.push({
+                AvgSKU: this.state.sku[i], Forums: this.state.forums[i], Professional: this.state.professional[i], Twitter: this.state.twitter[i], dates: this.state.dates[i]
+            });
+         }
 
-        this.setState({
-            areaChartData: [
-                {
-                    name: 'Q1 2016', Twitter: this.state.followers, Facebook: this.state.facebook,
-                    Articles: this.state.articles, Forums: this.state.forums
-                },
-                {
-                    name: 'Q2', Twitter: this.state.followers, Facebook: this.state.facebook,
-                    Articles: this.state.articles, Forums: this.state.forums
-                },
-                {
-                    name: 'Q3', Twitter: this.state.followers, Facebook: this.state.facebook,
-                    Articles: this.state.articles, Forums: this.state.forums
-                },
-                {
-                    name: 'Q4', Twitter: this.state.followers, Facebook: this.state.facebook,
-                    Articles: this.state.articles, Forums: this.state.forums
-                },
-                {
-                    name: 'Q5', Twitter: this.state.followers, Facebook: this.state.facebook,
-                    Articles: this.state.articles, Forums: this.state.forums
-                },
-                {
-                    name: 'Q6', Twitter: this.state.followers, Facebook: this.state.facebook,
-                    Articles: this.state.articles, Forums: this.state.forums
-                },
-                {
-                    name: 'Q7', Twitter: 10000, Facebook: this.state.facebook,
-                    Articles: this.state.articles, Forums: this.state.forums
-                }
-            ]
-        });
+         tmp.push({
+             AvgSKU: this.state.sku[6], Forums: this.state.forums[i], Professional: this.state.professional[i], Twitter: e.target.value, dates: this.state.dates[i]
+         })
+         this.setState({areaChartData:tmp});
 
-        // this.setState({areaChartData:[
-        //     {name: 'October', Twitter: e.target.value, Facebook: 400, Articles: 500, Forums:600},
-        //     {name: 'November', Twitter: 2200, Facebook: 500, Articles: 600, Forums:700},
-        //     {name: 'December', Twitter: 3300, Facebook: 600, Articles: 700, Forums:800},
-        //     {name: 'January', Twitter: 5000, Facebook: 700, Articles: 799, Forums: 800}]});
     }
 
 
@@ -790,8 +729,17 @@ export default class ViewContent extends React.Component {
                 <SocialCard visibility={this.state.socialVis} areaChartData={this.state.areaChartData}
                             update={this.update.bind(this)} sentimentData={this.state.sentimentChartData} />
 
-                <PerformanceCard visibility={this.state.performVis} areaChartData={this.state.areaChartData}
-                                 update={this.update.bind(this)} sentimentData={this.state.sentimentChartData}/>
+                <PerformanceCard
+                    visibility={this.state.performVis}
+                    areaChartData={this.state.areaChartData}
+                    update={this.update.bind(this)}
+                    sentimentData={this.state.sentimentChartData}
+                    dates = {this.state.dates}
+                    twitter = {this.state.twitter[6]}
+                    professional = {this.state.professional}
+                    forums = {this.state.forums}
+                    sku = {this.state.sku}
+                />
 
                 <PersonaCard visibility={this.state.personaVis} areaChartData={this.state.areaChartData}
                              update={this.update.bind(this)} sentimentData={this.state.sentimentChartData}/>

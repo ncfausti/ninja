@@ -1,18 +1,20 @@
 import React from 'react';
 import 'recharts';
 
-import {ComposedChart,AreaChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
+import {ComposedChart,AreaChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ReferenceArea} from 'recharts';
 
 export const StackedAreaChart = (props) => (
 <div className={"stacked-chart"}>
-        <ComposedChart width={600} height={260} data={props.data}
+        <ComposedChart width={800} height={360} data={props.data}
                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
     	{/*<AreaChart width={600} height={270}*/}
             {/*margin={{top: 10, right: 30, left: 0, bottom: 0}}>*/}
 
 
                 <XAxis hide={false} dataKey="dates" scaleToFit={true} textAnchor={"end"} angle={-5} scale="point" />
-        <YAxis dataKey="percent"/>
+        <YAxis />
+                <ReferenceLine x={"Jul-Sep 2017"} stroke="green" label="PROJECTED" />
+                <ReferenceArea x1={"Jul-Sep 2017"} x2={"Oct-Dec 2017"} y1={0} stroke="red" strokeOpacity={0.3} />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip/>
         <Area type='monotone' dataKey='Twitter' stackId="1" stroke='rgb(70,160,236)' fill='rgb(70,160,236)' />
