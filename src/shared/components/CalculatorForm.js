@@ -28,10 +28,10 @@ export default class CalculatorForm extends Component {
 				{/*<label htmlFor="facebook">Facebook </label>*/}
 				{/*<input ref="fb" defaultValue={9425} id="facebook" type="number" required onChange={this.props.update.bind(this)} />*/}
 				{/*<br />*/}
-				<label htmlFor="articles">Articles </label>
-				<input ref="ar" defaultValue={20} id="articles" type="number"
-					   onChange={this.props.update.bind(this)} />
-				<br />
+				{/*<label htmlFor="articles">Articles </label>*/}
+				{/*<input ref="ar" defaultValue={20} id="articles" type="number"*/}
+					   {/*onChange={this.props.update.bind(this)} />*/}
+				{/*<br />*/}
 				<label htmlFor="forums">Forum Posts </label>
 				<input ref="fr" defaultValue={3} id="forums" type="number"
 					   onChange={this.props.update.bind(this)} />

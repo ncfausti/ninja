@@ -11,6 +11,7 @@ import {
 
 import IconDot from 'react-icons/lib/md/fiber-manual-record';
 import {StackedAreaChart} from "../../shared/components/StackedAreaChart";
+import {MultiLineChart} from "../../shared/components/MultiLineChart";
 import CalculatorForm from "../../shared/components/CalculatorForm";
 import HalfDonutChart from "../../shared/components/HalfDonutChart";
 import axios from 'axios';
@@ -230,7 +231,7 @@ class SocialCard extends React.Component {
                         <div className="mb-4 col-sm-12 col-md-6">
                             <Card>
                                 <CardBlock>
-                                    <CardTitle className="text-uppercase h3 center">Social Reach <span className="deemphasize">(this quarter)</span></CardTitle>
+                                    <CardTitle className="text-uppercase h3 center">Your Social <span className="deemphasize">(this quarter)</span></CardTitle>
                                     <div> {/*<DonutChart className={"scaling-svg"} data={[{name: 'Positive', value: 400},*/}
                                         {/*{name: 'Neutral', value: 100},*/}
                                         {/*{name: 'Negative', value: 100}]} />*/}
@@ -280,9 +281,9 @@ class PerformanceCard extends React.Component {
                             <CardBlock>
                                 <CardTitle className="text-uppercase h6">National Brandshare</CardTitle>
                                 <div className="small mb-4 card-subtitle">Growth over time</div>
-                                <div style={{width: '100%', height: '280px'}}>
+                                <div style={{width: '100%', height: '600px'}}>
                                     {/*<SalesDataChart/>*/}
-                                    <StackedAreaChart data={this.props.areaChartData} />
+                                    <MultiLineChart data={this.props.multiLineData} />
                                 </div>
                             </CardBlock>
                         </Card>
@@ -481,6 +482,7 @@ export default class ViewContent extends React.Component {
                 // init with static data
 
             ],
+            multiLineData: [],
             socialVis: "visible",
             performVis: "invisible",
             personaVis: "invisible",
@@ -590,6 +592,23 @@ export default class ViewContent extends React.Component {
                 let forums = [];
                 let sku = [];
                 let dispensary = 1;
+                let percents = [0,1,2,3];
+                let kiva = [1.22, 1.20,1.35, 1.3];
+                let comp1 = [0.96, 0.99, 1, 1.10];
+                let comp2 = [1.32, 1.51, 1.7, 2.03];
+                let dates1yr=["Jan-Mar 2017", "Apr-Jun 2017", "Jul-Sep 2017", "Oct-Dec 2017"];
+
+                let multiLineData = [];
+
+                for (let i = 0; i < 4; i++){
+                    multiLineData.push({
+                        kiva:kiva[i],
+                        comp1:comp1[i],
+                        comp2:comp2[i],
+                        dates:dates1yr[i],
+                        percents:percents[i],
+                    });
+                }
 
                 for (let i = 0; i < res.data.length; i++) {
                     for (let j = 0; j < cols.length; j++) {
@@ -603,22 +622,45 @@ export default class ViewContent extends React.Component {
                             pos = quarters[i]['positive'];
                         }
                     }
-
+                    if(i > 3) {
+                        dates1yr.push(quarters[i]["date"]);
+                    }
                     dates.push(quarters[i]["date"]);
                     twitter.push(quarters[i]["followers_twitter"]);
                     professional.push(quarters[i]["professional"]);
                     forums.push(quarters[i]["forums"]);
                     sku.push(quarters[i]["sku_predict"]);
 
-                    areaChartData.push({
-                        dates: quarters[i]["date"],
-                        name: "Q" + quarters[i]["quarter"],
-                        Twitter: quarters[i]["followers_twitter"],
-                   //     Dispensaries: quarters[i]["dispensary"],
-                        Forums: quarters[i]["forums_total"],
-                        Professional: quarters[i]["professional"],
-                        AvgSKU: quarters[i]["sku_predict"],
-                    });
+                    if(i < 4) {
+                        areaChartData.push({
+                            kiva: kiva[i],
+                            comp1:comp1[i],
+                            comp2:comp2[i],
+                            percents: percents,
+                            dates: quarters[i]["date"],
+                            name: "Q" + quarters[i]["quarter"],
+                            Twitter: quarters[i]["followers_twitter"],
+                            //     Dispensaries: quarters[i]["dispensary"],
+                            Forums: quarters[i]["forums_total"],
+                            Professional: quarters[i]["professional"],
+                            AvgSKU: quarters[i]["sku_predict"],
+                        });
+                    }
+                    // only push the second half of dates for dates1yr
+                    else if (i >= 4) {
+                        areaChartData.push({
+                            percents:percents,
+                            dates: quarters[i]["date"],
+                            dates1yr: quarters[i]["date"],
+                            name: "Q" + quarters[i]["quarter"],
+                            Twitter: quarters[i]["followers_twitter"],
+                            //     Dispensaries: quarters[i]["dispensary"],
+                            Forums: quarters[i]["forums_total"],
+                            Professional: quarters[i]["professional"],
+                            AvgSKU: quarters[i]["sku_predict"],
+                        });
+                    }
+
 
                     if(i === res.data.length - 2) {
                         sentimentChartData.push(
@@ -629,10 +671,17 @@ export default class ViewContent extends React.Component {
                         dispensary = quarters[i]["dispensary"];
                     }
                 }
+                // remove last column of data bc all 0s
                 areaChartData.pop();
                 let i = 6;
+
+                // just extrapolating Q4 2017 from Q3 '17
                 areaChartData.push({
+                  //  kivaBrandshares:kivaBrandshares[i%4],
+                    // comp1:comp1[i%4],
+                    // comp2:comp2[i%4],
                     dates: quarters[7]["date"],
+                   // dates1yr:quarters[7]["date"],
                     name: "Q7",// + quarters[7]["quarter"],
                     Twitter: quarters[i]["followers_twitter"],
                     //     Dispensaries: quarters[i]["dispensary"],
@@ -641,19 +690,40 @@ export default class ViewContent extends React.Component {
                     AvgSKU: quarters[i]["sku_predict"],
                 });
 
+                let bsTweets = 310;
+                let bsFollowers_twitter = 9425;
+                let bsForums = 3;
+                let bsProfessional = 20;
+                let bsDispensary = 1506;
+                let bsComposite = .97;
+
+                this.setState({bsTweets});
+                this.setState({bsFollowers_twitter});
+                this.setState({bsForums});
+                this.setState({bsProfessional});
+                this.setState({bsDispensary});
+                this.setState({bsComposite});
+
+
                 this.setState({dates});
+                this.setState({dates1yr});
                 this.setState({twitter});
                 this.setState({professional});
                 this.setState({forums});
                 this.setState({sku});
                 this.setState({dispensary});
 
+                this.setState({kiva});
+                this.setState({comp1});
+                this.setState({comp2});
+                this.setState({dates1yr});
 
                 this.setState({composite});
                 this.setState({neg});
                 this.setState({neutral});
                 this.setState({pos});
 
+                this.setState({multiLineData});
                 this.setState({areaChartData});
                 this.setState({sentimentChartData});
 
@@ -696,28 +766,95 @@ export default class ViewContent extends React.Component {
 
     update(e) {
        // alert(this.state.twitter + " ")
-        let brandshare = (50 * 8 * 57 * (Int(this.state.professional[6])) * 1.6 * Int(this.state.forums[6])
-        + 1114.4 * (Int(this.state.composite) * .01) + .003 * (Int(this.state.twitter[6]) * Int(this.state.dispensary)
-        + .07 * (Int(this.state.followers) * Int(this.state.twitter[6]))) / 340000);
+       //  let brandshare = (50 * 8 * 57 * (Int(this.state.professional[6])) * 1.6 * Int(this.state.forums[6])
+       //  + 1114.4 * (Int(this.state.composite) * .01) + .003 * (Int(this.state.twitter[6]) * Int(this.state.dispensary)
+       //  + .07 * (Int(this.state.followers) * Int(this.state.twitter[6]))) / 340000);
 
-       // alert(brandshare);
+        // let brandshare = ( 50 * 8 + 57 * (Int(this.state.professional[6]))
+        //     + (1.6 * Int(this.state.forums[6]))
+        //     + 1114.4 * (Int(this.state.composite) * .01)
+        //     + (.003 * (Int(this.state.twitter[6]) * Int(this.state.dispensary)))
+        //     + (.07 * Int(this.state.followers)) / 340000);
+
+        let prof = Int(this.state.professional[6]);
+        let dispensery = Int(this.state.dispensary);
+        let tw_followers = Int(this.state.twitter[6]);
+
+        //alert(e.target.value)
+        if(e.target.id === "followers"){
+            // followers_twitter = Int(e.target.value);
+            this.setState({bsFollowers_twitter:Int(e.target.value)});
+        }
+        if(e.target.id === "tweets"){
+            // tweets = Int(e.target.value);
+            this.setState({bsTweets:Int(e.target.value)});
+        }
+        if(e.target.id === "forums"){
+            // forums = Int(e.target.value);
+            this.setState({bsForums:Int(e.target.value)});
+        }
+        if(e.target.id === "sentiment"){
+            // composite = Int(e.target.value);
+            this.setState({bsComposite:Int(e.target.value)});
+
+        }
+        if(e.target.id === "articles"){
+            // professional = Int(e.target.value);
+            this.setState({bsProfessional:Int(e.target.value)});
+        }
+
+        if(e.target.id === "stores"){
+            // professional = Int(e.target.value);
+            this.setState({bsDispensary:Int(e.target.value)});
+        }
+
+        this.setState({[e.target.id]: Int(e.target.value)});
+
+        // let brandshare = ( (50 * 8)
+        //     + (57 * professional)
+        //     + (1.6 * forums)
+        //     + (1114.4 * composite)
+        //     + (.003 * (tweets * dispensary))
+        //     + (.07 * followers_twitter)) / 340000;
+
+        let brandshare = ( (50 * 8)
+            + (57 * this.state.bsProfessional)
+            + (1.6 * this.state.bsForums)
+            + (1114.4 * this.state.bsComposite)
+            + (.003 * (this.state.bsTweets * this.state.bsDispensary))
+            + (.07 * this.state.bsFollowers_twitter)) / 340000;
+
+        // debugger;
+     //   alert(brandshare);
 
         let totals = [];
         // calc numbers
-        console.log(e.target.id + " : " + e.target.value);
-        this.setState({[e.target.id]: e.target.value});
+
         let tmp = [];
 
-        for(var i = 0; i < this.state.areaChartData.length - 1; i++) {
-            tmp.push({
-                AvgSKU: this.state.sku[i], Forums: this.state.forums[i], Professional: this.state.professional[i], Twitter: this.state.twitter[i], dates: this.state.dates[i]
-            });
-         }
+        // social value graph
+        // for(var i = 0; i < this.state.areaChartData.length - 1; i++) {
+        //     tmp.push({
+        //         AvgSKU: this.state.sku[i], Forums: this.state.forums[i], Professional: this.state.professional[i], Twitter: this.state.twitter[i], dates: this.state.dates[i]
+        //     });
+        //
+        let percents = [0,1,2,3];
 
-         tmp.push({
-             AvgSKU: this.state.sku[6], Forums: this.state.forums[i], Professional: this.state.professional[i], Twitter: e.target.value, dates: this.state.dates[i]
-         })
-         this.setState({areaChartData:tmp});
+        for(var i = 0; i < this.state.multiLineData.length; i++) {
+            if(i < this.state.multiLineData.length-1){
+                totals.push({
+                    kiva:this.state.kiva[i], comp1:this.state.comp1[i], comp2:this.state.comp2[i], dates:this.state.dates1yr[i], percents:percents[i]
+                });
+            }
+            else{
+                totals.push({
+                    kiva:brandshare * 100, comp1:this.state.comp1[i], comp2:this.state.comp2[i], dates:this.state.dates1yr[i], percents: percents[i]
+                });
+            }
+         }
+debugger;
+        this.setState({areaChartData:tmp});
+        this.setState({multiLineData:totals});
 
     }
 
@@ -731,7 +868,7 @@ export default class ViewContent extends React.Component {
 
                 <PerformanceCard
                     visibility={this.state.performVis}
-                    areaChartData={this.state.areaChartData}
+                    multiLineData={this.state.multiLineData}
                     update={this.update.bind(this)}
                     sentimentData={this.state.sentimentChartData}
                     dates = {this.state.dates}
@@ -758,7 +895,7 @@ class CardNav extends React.Component {
         return (<div className={"card-nav card card-block"}>
             <ul className={"list-unstyled"}>
                 <li id={"socialLink"} className={"mb-4 col-sm-12 col-md-4"}
-                    onClick={this.props.switchCard.bind(this)}>Social Metrics</li>
+                    onClick={this.props.switchCard.bind(this)}>Social Listening</li>
                 <li id={"perfLink"} className={"mb-4 col-sm-12 col-md-4"}
                     onClick={this.props.switchCard.bind(this)}>Key Performance</li>
                 <li id={"persLink"} className={"mb-4 col-sm-12 col-md-4"}
