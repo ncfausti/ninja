@@ -1,7 +1,7 @@
 import React from 'react';
 import 'recharts';
 
-import { PieChart, Pie, Sector, Cell } from 'recharts';
+import { Pie, Sector, Cell } from 'recharts';
 const data = [{name: 'Positive', value: 400},
     {name: 'Neutral', value: 100},
     {name: 'Negative', value: 300},];
@@ -12,7 +12,7 @@ const RADIAN = Math.PI / 180;
 export default class DonutChart extends React.Component{
 	render () {
   	return (
-    	<PieChart width={600} height={300} onMouseEnter={this.onPieEnter}>
+    	<PieChart width={650} height={300} onMouseEnter={this.onPieEnter}>
         <Pie
           data={this.props.data}
           cx={240}

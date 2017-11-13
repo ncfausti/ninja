@@ -1,7 +1,7 @@
 import React from 'react';
 import 'recharts';
 
-import { PieChart, Pie, Sector, Cell } from 'recharts';
+import { PieChart, Pie, Sector, Cell, Tooltip } from 'recharts';
 
 const COLORS = ['#FF0000', '#33ee88', '#00CC77'];
 
@@ -22,15 +22,15 @@ export default class HalfDonutChart extends React.Component{
         }
         catch(e) {}
   	return (
-    	<PieChart width={560} height={200} onMouseEnter={this.onPieEnter}>
+    	<PieChart width={this.props.w} height={this.props.h} onMouseEnter={this.onPieEnter}>
         <Pie
           data={this.props.data}
-          cx={240}
-          cy={130}
+          cx={this.props.cx}
+          cy={this.props.cy}
           startAngle={180}
           endAngle={0}
-          innerRadius={90}
-          outerRadius={110}
+          innerRadius={this.props.inR}
+          outerRadius={this.props.outR}
           fill="#8884d8"
           paddingAngle={5}
         >
@@ -38,6 +38,7 @@ export default class HalfDonutChart extends React.Component{
             this.props.data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
           }
         </Pie>
+            <Tooltip />
       </PieChart>
     );
   }

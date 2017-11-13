@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    AreaChart, Area,
+    AreaChart, Area, LineChart, Line,
     PieChart, Pie,
     XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell, Sector,
     ResponsiveContainer
@@ -10,12 +10,18 @@ import {
 } from 'reactstrap';
 
 import IconDot from 'react-icons/lib/md/fiber-manual-record';
+import MdThumbUp from 'react-icons/lib/md/thumb-up';
+import MdThumbDown from 'react-icons/lib/md/thumb-down';
+import MdArrowDownward from 'react-icons/lib/md/arrow-downward';
+import MdArrowUpward from 'react-icons/lib/md/arrow-upward';
 import {StackedAreaChart} from "../../shared/components/StackedAreaChart";
 import {MultiLineChart} from "../../shared/components/MultiLineChart";
 import CalculatorForm from "../../shared/components/CalculatorForm";
 import HalfDonutChart from "../../shared/components/HalfDonutChart";
+
 import axios from 'axios';
 import { BarChart, Bar } from 'recharts';
+import RTChart from 'react-rt-chart';
 
 
 // Sales Chart
@@ -207,24 +213,50 @@ class SocialCard extends React.Component {
         render() {
             return(
                 <div className={this.props.visibility}>
-                    <CardGroup className="sales-card mb-4">
+                    <CardGroup className="sales-card mb-12">
                         <Card style={{'flex': '2'}}>
-                            <CardBlock>
-                                <CardTitle className="text-uppercase h3 center">Sentiment Analysis</CardTitle>
-                                <div>
-                                    <HalfDonutChart className={"scaling-svg"}
-                                                    data={this.props.sentimentData} colorData={COLORS} />
-                                </div>
+                            <CardBlock style={{"text-align":"center","padding-top":"20%"}}>
+                                <CardTitle className="text-uppercase h4 center">Sentiment Analysis</CardTitle>
+                                    <span className={""}>
 
+                                    <HalfDonutChart className={"scaling-svg"} cy={70} w={200} h={100} inR={50} outR={70} style={{'display':'inline-block'}}
+                                                    data={this.props.sentimentData} colorData={COLORS} />
+                                        <span className={"sentiment-txt-info"}>
+                                        <MdThumbUp style={{"fill":"rgb(0, 204, 119)"}}/> Very Positive - 17%
+                                        <br/>
+                                        <MdThumbUp style={{"fill":"rgb(51, 238, 136)"}}/> Positive - 80%
+                                        <br/>
+                                        <MdThumbDown style={{"fill":"red"}}/> Negative - 3%
+                                        </span>
+
+                                    </span>
                             </CardBlock>
                         </Card>
-                        <Card style={{'flex': '2'}}>
+                        <Card style={{'flex': '4'}}>
                             <CardBlock>
-                                <CardTitle className="text-uppercase h3">Social Volume</CardTitle>
-                                <StackedAreaChart data={this.props.areaChartData} />
+                            <CardTitle className="text-uppercase h4 center">Attributes</CardTitle>
 
+                                    <span className={"floatLeft center"}>
+
+                                    <SimpleBarChart />
+                                    </span>
+                        </CardBlock>
+                    </Card>
+                    <Card style={{'flex': '2'}}>
+                        <CardBlock>
+
+                        <CardTitle className="text-uppercase h4 center">Competitors Sentiment</CardTitle>
+
+                                    <span className={"floatLeft"} style={{"width":"130px", "text-align":"center "}}>
+                                        <span>Comp 1</span>
+                                            <HalfDonutChart className={"scaling-svg floatRight"}
+                                                            data={this.props.sentimentData} w={100} h={72} inR={20} outR={30} style={{'display':'inline-block'}} colorData={COLORS} />
+                                        <span>Comp 2</span>
+
+                                            <HalfDonutChart className={"scaling-svg floatRight"}
+                                                            data={this.props.sentimentData} w={100} h={72} inR={20} outR={30} style={{'display':'inline-block'}} colorData={COLORS} />
+                                        </span>
                             </CardBlock>
-
                         </Card>
                     </CardGroup>
                     <Row>
@@ -237,13 +269,17 @@ class SocialCard extends React.Component {
                                         {/*{name: 'Negative', value: 100}]} />*/}
 
                                         <table className="table table-bordered">
+                                            <thead>
+                                            <td></td>
+                                            <td></td>
+                                            <td>∆ From Last Qtr.</td>
+                                            </thead>
                                             <tbody>
                                             {socialBreakdown.map( (k,v) => <tr>
                                                 <td>{k.name}</td>
                                                 <td colSpan={1}>{k.val}</td>
-                                                {k.name === "Sentiment Rating" &&
-                                                <td><span className={"pos"}>{k.val}</span></td>
-                                                }
+                                                <td colSpan={1}>{(Math.random() > .5) ? (<MdArrowDownward fill={"red"} />) : (<MdArrowUpward fill={"rgb(0, 204, 119)"}/>)}
+                                                {parseFloat(Int(k.val) * .05 * Math.random()).toFixed(2)}%</td>
                                             </tr>)}
                                             </tbody>
                                         </table>
@@ -255,17 +291,52 @@ class SocialCard extends React.Component {
                         </div>
                         {/* traffic source */}
                         <div className="mb-4 col-sm-12 col-md-6">
-                            <Card>
+                            <Card style={{'flex': '2'}}>
                                 <CardBlock>
-                                    <img src={"wordclouds/main_wordle.png"} />
+                                    <CardTitle className="text-uppercase h3">Social Volume</CardTitle>
+                                    {/*<StackedAreaChart data={this.props.areaChartData} />*/}
+                                    <RTChartWrapper />
                                 </CardBlock>
+
                             </Card>
                         </div>
+                    </Row>
+                    <Row>
+                        <Card>
+                            <CardBlock>
+                                <img src={"wordclouds/main_wordle.png"} />
+                            </CardBlock>
+                        </Card>
                     </Row>
                 </div>
                 );
         }
 }
+
+const bardata = [
+    {name: 'Medical Health', Percent: 25, pv: 2400, amt: 2400},
+    {name: 'Parties and Friends', Percent: 4, pv: 1398, amt: 2210},
+    {name: 'Taste', Percent: 29, pv: 9800, amt: 2290},
+    {name: 'Relaxing', Percent: 12, pv: 3908, amt: 2000},
+    {name: 'Legalization', Percent: 7, pv: 4800, amt: 2181},
+    {name: 'Community', Percent: 12, pv: 3800, amt: 2500},
+    {name: 'Well-Being', Percent: 11, pv: 4300, amt: 2100},
+];
+const SimpleBarChart = React.createClass({
+    render () {
+        return (
+            <BarChart width={550} height={300} data={bardata}
+                      margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                <XAxis type="category" dataKey="name"  textAnchor={"middle"} />
+                <YAxis/>
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip/>
+                <Legend />
+                <Bar dataKey="Percent" fill="#82ca9d" />
+            </BarChart>
+        );
+    }
+})
 
 class PerformanceCard extends React.Component {
     constructor(props) {
@@ -277,18 +348,19 @@ class PerformanceCard extends React.Component {
         return(
                 <div className={this.props.visibility}>
                     <CardGroup className="sales-card mb-4">
-                        <Card style={{'flex': '3'}}>
+                        <Card style={{'flex': '6'}}>
                             <CardBlock>
                                 <CardTitle className="text-uppercase h6">National Brandshare</CardTitle>
                                 <div className="small mb-4 card-subtitle">Growth over time</div>
-                                <div style={{width: '100%', height: '600px'}}>
+                                <div style={{width: '100%', height: '650px'}}>
                                     {/*<SalesDataChart/>*/}
                                     <MultiLineChart data={this.props.multiLineData} />
                                 </div>
                             </CardBlock>
                         </Card>
-                        <Card style={{'flex': '2'}}>
+                        <Card style={{'flex': '3'}}>
                             <CardBlock>
+                                <h1>1.29%</h1>
                                 <CardTitle className="text-uppercase h6">Brandshare Calculator</CardTitle>
                                 <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
                                 <CalculatorForm update={this.props.update.bind(this)} data={this.props.areaChartData}
@@ -309,11 +381,11 @@ const COLORS = ['#00CC77', '#FF0000', '#FFBB44'];
 
 const TinyBarChart = ({data}) => (
     <div className={"tinyChartWrapper"}>
-        <BarChart width={300} height={60} data={data} layout={"vertical"}>
+        <BarChart width={200} height={70} data={data} layout={"vertical"}>
             <XAxis type="number"/>
             <YAxis type="category" dataKey="name" />
-            <Bar type="monotone" dataKey="% Posters" fill={"#00c853"} />
-            <Bar type="monotone" dataKey="% Followers" fill={"#2962ff"} />
+            <Bar type="monotone" dataKey="Posters" fill={"#00c853"} />
+            <Bar type="monotone" dataKey="Silent Followers" fill={"#2962ff"} />
 
             <Tooltip />
         </BarChart>
@@ -322,37 +394,248 @@ const TinyBarChart = ({data}) => (
 );
 
 
-const male = [
-    {'% Posters': 23},
-    {'% Followers': 43,},
-];
-const female = [
-    {'% Posters': 77},
-    {'% Followers': 57,},
-];
-const millennials = [
-    {'% Posters': 23},
-    {'% Followers': 17,},
-];
-const genX = [
-    {'% Posters': 44},
-    {'% Followers': 42,},
-];
-const babyBoomers = [
-    {'% Posters': 33},
-    {'% Followers': 41,},
-];
+let types =
+    [
+        [{
+            "Type": "Male",
+            "Posters": 23,
+            "Silent Followers": 44
+        }],
+        [{
+            "Type": "Female",
+            "Posters": 77,
+            "Silent Followers": 57
+        }],
+        [{
+            "Type": "Millennials",
+            "Posters": 23,
+            "Silent Followers": 17
+        }],
+        [{
+            "Type": "Gen Xers",
+            "Posters": 44,
+            "Silent Followers": 42
+        }],
+        [{
+            "Type": "Baby Boomers",
+            "Posters": 33,
+            "Silent Followers": 41
+        }],
+        [{
+            "Type": "Moderate Users",
+            "Posters": 45,
+            "Silent Followers": 38
+        }],
+        [{
+            "Type": "Occasional Users",
+            "Posters": 43,
+            "Silent Followers": 62
+        }],
+        [{
+            "Type": "News Sources",
+            "Posters": 4,
+            "Silent Followers": 30
+        }],
+        [{
+            "Type": "Bill Maher",
+            "Posters": 52,
+            "Silent Followers": 39
+        }],
+        [{
+            "Type": "NPR",
+            "Posters": 50,
+            "Silent Followers": 38
+        }],
+        [{
+            "Type": "Politico",
+            "Posters": 48,
+            "Silent Followers": 36
+        }],
+        [{
+            "Type": "Slate",
+            "Posters": 46,
+            "Silent Followers": 35
+        }],
+        [{
+            "Type": "NYTimes",
+            "Posters": 43,
+            "Silent Followers": 32
+        }],
+        [{
+            "Type": "AlterNet",
+            "Posters": 43,
+            "Silent Followers": 32
+        }],
+        [{
+            "Type": "Interests",
+            "Posters": 26,
+            "Silent Followers": 10
+        }],
+        [{
+            "Type": "Foodies",
+            "Posters": 36,
+            "Silent Followers": 39
+        }],
+        [{
+            "Type": "Basketball",
+            "Posters": 35,
+            "Silent Followers": 38
+        }],
+        [{
+            "Type": "Hiking",
+            "Posters": 33,
+            "Silent Followers": 36
+        }],
+        [{
+            "Type": "Bicycling",
+            "Posters": 32,
+            "Silent Followers": 35
+        }],
+        [{
+            "Type": "Cannabis Sources",
+            "Posters": 11,
+            "Silent Followers": 22
+        }],
+        [{
+            "Type": "MarijuanaPolicy",
+            "Posters": 30,
+            "Silent Followers": 34
+        }],
+        [{
+            "Type": "Cannabist",
+            "Posters": 37,
+            "Silent Followers": 40
+        }],
+        [{
+            "Type": "Charity",
+            "Posters": 2,
+            "Silent Followers": 3
+        }],
+        [{
+            "Type": "ONECampaign",
+            "Posters": 20,
+            "Silent Followers": 22
+        }],
+        [{
+            "Type": "Heifer International",
+            "Posters": 11,
+            "Silent Followers": 12
+        }],
+        [{
+            "Type": "Influencers",
+            "Posters": 5,
+            "Silent Followers": 11
+        }],
+        [{
+            "Type": "Barack Obama",
+            "Posters": 57,
+            "Silent Followers": 63
+        }],
+        [{
+            "Type": "Dalai Lama",
+            "Posters": 23,
+            "Silent Followers": 25
+        }],
+        [{
+            "Type": "Paula Poundstone",
+            "Posters": 21,
+            "Silent Followers": 23
+        }],
+        [{
+            "Type": "Neil Tyson",
+            "Posters": 19,
+            "Silent Followers": 20
+        }],
+        [{
+            "Type": "Michael Moore",
+            "Posters": 17,
+            "Silent Followers": 18
+        }]
+    ];
 
-const yogis = [
-    {'% Posters': 23},
-    {'% Followers': 44,},
+let personas = [
+    [
+    {
+        "Icon":"icons/yogi.png",
+        "PersonaName": "Yogis",
+        "Posters": 37,
+        "Silent Followers": 44,
+        "SentimentAnalysis": "97%",
+        "CompetitorsSentiment": "94%",
+        "TopPostsAttributes": "Health and well-being",
+        "ProductPreferences": "Infused drinks"
+    }],
+    [{
+        "Icon":"icons/partier.png",
+        "PersonaName": "Partiers",
+        "Posters": 1,
+        "Silent Followers": 4,
+        "SentimentAnalysis": "99%",
+        "CompetitorsSentiment": "97%",
+        "TopPostsAttributes": "Parties and friends",
+        "ProductPreferences": "Cartridges"
+    }],
+    [{
+        "Icon":"icons/boomerang.png",
+        "PersonaName": "Boomerangs",
+        "Posters": 34,
+        "Silent Followers": "39%",
+        "SentimentAnalysis": "96%",
+        "CompetitorsSentiment": "92%",
+        "TopPostsAttributes": "Medical and taste",
+        "ProductPreferences": "Topicals"
+    }],
+    [{
+        "Icon":"icons/techie.png",
+        "PersonaName": "Techies",
+        "Posters": 4,
+        "Silent Followers": 7,
+        "SentimentAnalysis": " 90%",
+        "CompetitorsSentiment": "93%",
+        "TopPostsAttributes": "Relaxing and friends",
+        "ProductPreferences": "Cartridges"
+    }],
+    [{
+        "Icon":"icons/rad.png",
+        "PersonaName": "Radical Millennials",
+        "Posters": 5,
+        "Silent Followers": 1,
+        "SentimentAnalysis": "95%",
+        "CompetitorsSentiment": "98%",
+        "TopPostsAttributes": "Legalization and community",
+        "ProductPreferences": "Cartridges"
+    }],
+    [{
+        "Icon":"icons/canna.png",
+        "PersonaName": "Canna-Engaged",
+        "Posters": 19,
+        "Silent Followers": 5,
+        "SentimentAnalysis": "99%",
+        "CompetitorsSentiment": "96%",
+        "TopPostsAttributes": "Legalization and community",
+        "ProductPreferences": "Community"
+    }],
+    [{
+        "Icon":"icons/comedy.png",
+        "PersonaName": "Comedy Bingers",
+        "Posters": 20,
+        "Silent Followers": 7,
+        "SentimentAnalysis": "98%",
+        "CompetitorsSentiment": "91%",
+        "TopPostsAttributes": "Relaxing and taste",
+        "ProductPreferences": "Choclate Edibles"
+    }],
+    [{
+        "Icon":"icons/liberal.png",
+        "PersonaName": "Liberal Mainstream News Late Night Watchers",
+        "Posters": 14,
+        "Silent Followers": 24,
+        "SentimentAnalysis": "97%",
+        "CompetitorsSentiment": "90%",
+        "TopPostsAttributes": "Relaxing",
+        "ProductPreferences": "Topicals"
+    }]
 ];
-const partiers = [
-    {'% Posters': 1},
-    {'% Followers': 4,},
-];
-
-
 
 class PersonaCard extends React.Component {
     constructor(props) {
@@ -364,66 +647,7 @@ class PersonaCard extends React.Component {
         return(
             <div className={this.props.visibility}>
                 <CardGroup className="sales-card mb-4">
-                    <Card style={{'flex': '2'}}>
-                        <CardBlock>
-                            <CardTitle className="text-uppercase h5 center">Social Activity</CardTitle>
-                            <table className="table table-bordered centered">
-                                <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">% Posters</th>
-                                    <th scope="col">% Followers</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><img src={"icons/male.png"} width={"25%"} /><br />Male</td>
-                                    <td colSpan={2}>
-
-                                        <TinyBarChart data={male} />
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src={"icons/female.png"} width={"25%"} /><br />Female</td>
-
-                                    <td colSpan={2}>
-
-                                        <TinyBarChart data={female} />
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src={"icons/millenial.png"} width={"25%"} /><br />Millennials</td>
-
-                                    <td colSpan={2}>
-
-                                        <TinyBarChart data={millennials} />
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src={"icons/genX.png"} width={"25%"} /><br />Gen Xers</td>
-
-                                    <td colSpan={2}>
-
-                                        <TinyBarChart data={genX} />
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src={"icons/baby-boomer.png"} width={"25%"} /><br />Baby Boomers</td>
-                                    <td colSpan={2}>
-
-                                        <TinyBarChart data={babyBoomers} />
-
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </CardBlock>
-                    </Card>
-                    <Card style={{'flex': '2'}}>
+                    <Card style={{'flex': '4'}}>
                         <CardBlock>
                             <CardTitle className="text-uppercase h5">Personas</CardTitle>
                             <table className="table table-bordered">
@@ -432,28 +656,60 @@ class PersonaCard extends React.Component {
                                     <th scope="col"></th>
                                     <th scope="col">% Posters</th>
                                     <th scope="col">% Followers</th>
+                                    <th scope="col">Sentiment Analysis</th>
+                                    <th scope="col">Competitors Sentiment</th>
+                                    <th scope="col">Top Posts Attributes</th>
+                                    <th scope="col">Product Preferences</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><img src={"icons/yogi.png"} width={"25%"} /><br />Yogis</td>
+
+
+                                    {/*<td><img src={"icons/partier.png"} width={"15%"} /><br />Partiers</td>*/}
+
+                                {personas.map((item, i) => <tr>
+                                    <td>
+                                        <img src={item[0]["Icon"]} width={"25%"} />
+                                        <br />{item[0]["PersonaName"]}</td>
                                     <td colSpan={2}>
-
-                                        <TinyBarChart data={yogis} />
-
+                                        <TinyBarChart data={item} />
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td><img src={"icons/partier.png"} width={"25%"} /><br />Partiers</td>
+                                    <td>{item[0]["SentimentAnalysis"]}</td>
+                                    <td>{item[0]["CompetitorsSentiment"]}</td>
+                                    <td>{item[0]["TopPostsAttributes"]}</td>
+                                    <td>{item[0]["ProductPreferences"]}</td>
+                                </tr>)}
 
-                                    <td colSpan={2}>
 
-                                        <TinyBarChart data={partiers} />
-
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
+                        </CardBlock>
+                    </Card>
+                    <Card style={{'flex': '2'}}>
+                        <CardBlock>
+                            <CardTitle className="text-uppercase h5 center">Social Activity</CardTitle>
+                            <span className={"overflowTable"}>
+                            <table className="table table-bordered centered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">% Posters</th>
+                                    <th scope="col">% Followers</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {types.map((item, i) => <tr>
+                                    <td>
+                                        {item[0]["Type"]}
+                                    </td>
+                                    <td colSpan={2}>
+                                        <TinyBarChart data={item} />
+                                    </td>
+                                </tr>)}
+
+                                </tbody>
+                            </table>
+                            </span>
                         </CardBlock>
                     </Card>
                 </CardGroup>
@@ -593,14 +849,14 @@ export default class ViewContent extends React.Component {
                 let sku = [];
                 let dispensary = 1;
                 let percents = [0,1,2,3];
-                let kiva = [1.22, 1.20,1.35, 1.3];
-                let comp1 = [0.96, 0.99, 1, 1.10];
-                let comp2 = [1.32, 1.51, 1.7, 2.03];
-                let dates1yr=["Jan-Mar 2017", "Apr-Jun 2017", "Jul-Sep 2017", "Oct-Dec 2017"];
+                let kiva = [1.22, 1.20,1.22, 1.20,1.31, 1.3,1.25, 1.3, 1.20,1.22, 1.22,1.22, 1.22];
+                let comp1 = [0.96, 0.99,0.96, 0.99, 1, 1.10, 1, 1.10,0.99,0.96, 0.99, 1,0.99,];
+                let comp2 = [1.32, 1.51,1.32, 1.51, 1.7, 1.67, 1.7, 1.63,1.42, 1.36,1.32, 1.41,1.32,];
+                let dates1yr=["Jan 2017","Feb","Mar", "Apr 2017","May", "Jun", "Jul 2017", "Aug", "Sep", "Oct 2017","Nov","Dec", "Jan 2018"];
 
                 let multiLineData = [];
 
-                for (let i = 0; i < 4; i++){
+                for (let i = 0; i < 13; i++){
                     multiLineData.push({
                         kiva:kiva[i],
                         comp1:comp1[i],
@@ -631,7 +887,7 @@ export default class ViewContent extends React.Component {
                     forums.push(quarters[i]["forums"]);
                     sku.push(quarters[i]["sku_predict"]);
 
-                    if(i < 4) {
+                    if(i < 13) {
                         areaChartData.push({
                             kiva: kiva[i],
                             comp1:comp1[i],
@@ -647,19 +903,19 @@ export default class ViewContent extends React.Component {
                         });
                     }
                     // only push the second half of dates for dates1yr
-                    else if (i >= 4) {
-                        areaChartData.push({
-                            percents:percents,
-                            dates: quarters[i]["date"],
-                            dates1yr: quarters[i]["date"],
-                            name: "Q" + quarters[i]["quarter"],
-                            Twitter: quarters[i]["followers_twitter"],
-                            //     Dispensaries: quarters[i]["dispensary"],
-                            Forums: quarters[i]["forums_total"],
-                            Professional: quarters[i]["professional"],
-                            AvgSKU: quarters[i]["sku_predict"],
-                        });
-                    }
+                    // else if (i >= 4) {
+                    //     areaChartData.push({
+                    //         percents:percents,
+                    //         dates: quarters[i]["date"],
+                    //         dates1yr: quarters[i]["date"],
+                    //         name: "Q" + quarters[i]["quarter"],
+                    //         Twitter: quarters[i]["followers_twitter"],
+                    //         //     Dispensaries: quarters[i]["dispensary"],
+                    //         Forums: quarters[i]["forums_total"],
+                    //         Professional: quarters[i]["professional"],
+                    //         AvgSKU: quarters[i]["sku_predict"],
+                    //     });
+                    // }
 
 
                     if(i === res.data.length - 2) {
@@ -764,6 +1020,12 @@ export default class ViewContent extends React.Component {
 
 
 
+
+    //
+    // ********** UPDATE FUNCITON ************
+    //
+
+
     update(e) {
        // alert(this.state.twitter + " ")
        //  let brandshare = (50 * 8 * 57 * (Int(this.state.professional[6])) * 1.6 * Int(this.state.forums[6])
@@ -817,46 +1079,52 @@ export default class ViewContent extends React.Component {
         //     + (.003 * (tweets * dispensary))
         //     + (.07 * followers_twitter)) / 340000;
 
-        let brandshare = ( (50 * 8)
-            + (57 * this.state.bsProfessional)
-            + (1.6 * this.state.bsForums)
-            + (1114.4 * this.state.bsComposite)
-            + (.003 * (this.state.bsTweets * this.state.bsDispensary))
-            + (.07 * this.state.bsFollowers_twitter)) / 340000;
+        let quarter = 8
 
         // debugger;
-     //   alert(brandshare);
 
         let totals = [];
         // calc numbers
 
         let tmp = [];
 
-        // social value graph
-        // for(var i = 0; i < this.state.areaChartData.length - 1; i++) {
-        //     tmp.push({
-        //         AvgSKU: this.state.sku[i], Forums: this.state.forums[i], Professional: this.state.professional[i], Twitter: this.state.twitter[i], dates: this.state.dates[i]
-        //     });
-        //
         let percents = [0,1,2,3];
 
         for(var i = 0; i < this.state.multiLineData.length; i++) {
-            if(i < this.state.multiLineData.length-1){
+            if(i < this.state.multiLineData.length-3){
                 totals.push({
                     kiva:this.state.kiva[i], comp1:this.state.comp1[i], comp2:this.state.comp2[i], dates:this.state.dates1yr[i], percents:percents[i]
                 });
             }
             else{
                 totals.push({
-                    kiva:brandshare * 100, comp1:this.state.comp1[i], comp2:this.state.comp2[i], dates:this.state.dates1yr[i], percents: percents[i]
+                    kiva:this.calcBrandshare(quarter) * 100, comp1:this.state.comp1[i], comp2:this.state.comp2[i], dates:this.state.dates1yr[i], percents: percents[i]
                 });
+                quarter++
             }
-         }
-debugger;
+
+        }
+
         this.setState({areaChartData:tmp});
         this.setState({multiLineData:totals});
 
     }
+
+    calcBrandshare(quarter) {
+        let brandshare = ( (50/3. * (quarter / 3) )
+            + (57 * this.state.bsProfessional)
+            + (1.6 * this.state.bsForums)
+            + (1114.4 * this.state.bsComposite)
+            + (.003 * (this.state.bsTweets * this.state.bsDispensary))
+            + (.07 * this.state.bsFollowers_twitter)) ** (1 + ((quarter*2) * .0001))  / 340000;
+        return brandshare;
+    }
+
+    // ******** END UPDATE FUNCTION ********
+
+
+
+
 
 
     render() {
@@ -881,6 +1149,69 @@ debugger;
                 <PersonaCard visibility={this.state.personaVis} areaChartData={this.state.areaChartData}
                              update={this.update.bind(this)} sentimentData={this.state.sentimentChartData}/>
             </div>
+        )
+    }
+}
+
+class RTChartWrapper extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+    //
+    //     const startTime = new Date();
+    //     const startTweets = 1+Math.random();
+    //     const startFollowers = 1+Math.random();
+    //
+    //     this.state = {
+    //         data:[{
+    //             time: startTime,
+    //             times: [startTime],
+    //             Tweets: [startTweets],
+    //             Followers: [startFollowers],
+    //         }]
+    //     };
+    // }
+    //
+    // componentDidMount() {
+    //     // setInterval(() => this.forceUpdate(), 5000);
+    //     this.interval = setInterval(this.tick, 1000);
+    // }
+    //
+    // componentWillUnmount() {
+    //     clearInterval(this.interval);
+    // }
+    //
+    // tick() {
+    //     // get last item from data Array
+    //     // update values based off of that object
+    //     // push that obj on to the end of data
+    //     // setState(data: newDataArray
+    //     // return data array
+    //
+    //     let newData = this.state.data[this.state.data.length - 1];
+    //     let now = newData.time + 1000;
+    //
+    //     newData.time = now;
+    //
+    //     // remove first time item in array and push new time to the end
+    //     newData.times.shift();
+    //     newData.times.push(now);
+    //
+    //     this.setState({data:newData});
+    // }
+
+    render() {
+        //
+        // <LineChart width={500} height={300} data={this.state.data}>
+        //     <XAxis dataKey="date"/>
+        //     <YAxis/>
+        //     <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+        //     <Line type="monotone" dataKey="Tweets" stroke="#8884d8" />
+        //     <Line type="monotone" dataKey="Followers" stroke="#82ca9d" />
+        // </LineChart>
+
+        return (
+            <div>socIAL</div>
         )
     }
 }

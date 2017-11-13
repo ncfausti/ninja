@@ -27,8 +27,8 @@ const NavHead = (props) => (
             {/*</svg>*/}
 
             {/*Ninja by Hans Paul Mösl Junior from the Noun Project*/}
-            <img src={"ninja.png"} width={"20%"}/>
-            <strong className="h4 text-uppercase">ninja</strong>
+            <img src={"bg_logo.png"} width={"80%"}/>
+            <strong className="h4 text-uppercase"></strong>
         </Link>
         <div className={`toggle-dot ${props.mini ? 'active': ''}`} onClick={props.toggleNav}></div>
     </header>

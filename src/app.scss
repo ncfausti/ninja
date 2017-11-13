@@ -89,9 +89,20 @@
 div.ml2.small{display:none;}
 table td{text-align:center;}
 .ml-2 {display:none;}
-.tinyChartWrapper {padding: 10% 10% 10% 0%;}
+.tinyChartWrapper {padding: 0% 10% 0% 0%;}
 li.active {color:#333;font-weight:bold;}
 .deemphasize {
     font-size: .8em;
     font-weight: 100; }
 .pos {color:green;}
+.tinyChartWrapper .recharts-wrapper {margin-left: -22%;}
+.overflowTable { overflow:scroll !important;
+    max-height:974px;}
+.floatRight {float: right; display:inline;}
+.floatLeft {float: left; display:inline;}
+.recharts-cartesian-axis-ticks {font-size:10px;}
+
+.recharts-wrapper {width:100% !important; text-align:center !important;}
+.sentiment-txt-info {font-size:18px;
+width: 100%;
+    text-align: center;}
