@@ -16,9 +16,8 @@ export default () => (
                 <CardBlock>
                     <header className="mb-5 center">
                         <Link to="/">
-                            {/*Ninja by Hans Paul Mösl Junior from the Noun Project*/}
-                            <img src={"/ninja.png"} width={"20%"}/>
-                            <strong className="h3 text-uppercase" style={{color: '#212121'}}>Ninja</strong>
+                            <img src={"/bg_logo.png"} width={"80%"}/>
+                            <strong className="h3 text-uppercase" style={{color: '#212121'}}></strong>
                         </Link>
                         <p className="lead">Sign In to continue</p>
                     </header>

@@ -236,10 +236,10 @@ class SocialCard extends React.Component {
                             <CardBlock>
                             <CardTitle className="text-uppercase h4 center">Attributes</CardTitle>
 
-                                    <span className={"floatLeft center"}>
+                                    {/*<span className={"floatLeft center"}>*/}
 
                                     <SimpleBarChart />
-                                    </span>
+                                    {/*</span>*/}
                         </CardBlock>
                     </Card>
                     <Card style={{'flex': '2'}}>
@@ -283,8 +283,6 @@ class SocialCard extends React.Component {
                                             </tr>)}
                                             </tbody>
                                         </table>
-
-
                         </div>
                                 </CardBlock>
                             </Card>
@@ -293,20 +291,48 @@ class SocialCard extends React.Component {
                         <div className="mb-4 col-sm-12 col-md-6">
                             <Card style={{'flex': '2'}}>
                                 <CardBlock>
-                                    <CardTitle className="text-uppercase h3">Social Volume</CardTitle>
-                                    {/*<StackedAreaChart data={this.props.areaChartData} />*/}
-                                    <RTChartWrapper />
+                                    <CardTitle className="text-uppercase h3 center">Social Volume</CardTitle>
+                                    <StackedAreaChart data={this.props.areaChartData} />
+                                    {/*<RTChartWrapper />*/}
                                 </CardBlock>
 
                             </Card>
                         </div>
                     </Row>
                     <Row>
-                        <Card>
-                            <CardBlock>
-                                <img src={"wordclouds/main_wordle.png"} />
-                            </CardBlock>
-                        </Card>
+                        <div className="mb-4 col-sm-12 col-md-6">
+                            <Card>
+                                <CardBlock>
+                                    <CardTitle className="text-uppercase h3 center">Top Brands <span className="deemphasize">(by Social Volume)</span></CardTitle>
+                                    <div>
+                                        <HorizontalBarChart data={topBrands} xData={"Social Volume"} yData={"Brand"}/>
+                                    </div>
+                                </CardBlock>
+                            </Card>
+                        </div>
+                        <div className="mb-4 col-sm-12 col-md-6">
+                            <Card>
+                                <CardBlock>
+                                    <CardTitle className="text-uppercase h3 center">Top Dispensaries <span className="deemphasize">(tweeting about you)</span></CardTitle>
+                                    <div>
+                                        <HorizontalBarChart data={topDispensaries} xData={"Tweets"} yData={"Dispensary"}/>
+                                    </div>
+                                </CardBlock>
+                            </Card>
+                        </div>
+                        {/* traffic source */}
+                        <div className="mb-4 col-sm-12 col-md-6">
+                            <Card style={{'flex': '2'}}>
+                                <CardBlock>
+                                    <CardTitle className="text-uppercase h3 center">Tweet Topics</CardTitle>
+                                    <Card>
+                                        <CardBlock>
+                                            <img src={"wordclouds/main_wordle.png"} />
+                                        </CardBlock>
+                                    </Card>
+                                </CardBlock>
+                            </Card>
+                        </div>
                     </Row>
                 </div>
                 );
@@ -325,7 +351,8 @@ const bardata = [
 const SimpleBarChart = React.createClass({
     render () {
         return (
-            <BarChart width={550} height={300} data={bardata}
+            <ResponsiveContainer width={"98%"} height={300}>
+            <BarChart data={bardata}
                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                 <XAxis type="category" dataKey="name"  textAnchor={"middle"} />
                 <YAxis/>
@@ -333,6 +360,208 @@ const SimpleBarChart = React.createClass({
                 <Tooltip/>
                 <Legend />
                 <Bar dataKey="Percent" fill="#82ca9d" />
+            </BarChart>
+            </ResponsiveContainer>
+        );
+    }
+})
+
+const topBrands = [
+    {
+        "Brand": "Marley's Naturals",
+        "Social Volume": 359
+    },
+        {
+            "Brand": "Brand X",
+            "Social Volume": 333
+        },
+        {
+            "Brand": "Cheeba Chews",
+            "Social Volume": 217
+        },
+        {
+            "Brand": "Bloom Farms",
+            "Social Volume": 214
+        },
+        {
+            "Brand": "FlavRx",
+            "Social Volume": 201
+        },
+        {
+            "Brand": "AbsoluteXtracts",
+            "Social Volume": 171
+        },
+        {
+            "Brand": "Kushy Punch",
+            "Social Volume": 170
+        },
+        {
+            "Brand": "O.penVape",
+            "Social Volume": 148
+        },
+        {
+            "Brand": "Moxie Seeds & Extracts",
+            "Social Volume": 125
+        },
+        {
+            "Brand": "Mary's Medicinals",
+            "Social Volume": 122
+        },
+        {
+            "Brand": "Wyld",
+            "Social Volume": 104
+        },
+        {
+            "Brand": "Dixie",
+            "Social Volume": 98
+        },
+        {
+            "Brand": "Cavi Cone",
+            "Social Volume": 92
+        },
+        {
+            "Brand": "LOL Edibles",
+            "Social Volume": 76
+        },
+        {
+            "Brand": "Oleum Extracts",
+            "Social Volume": 76
+        },
+        {
+            "Brand": "Zoots",
+            "Social Volume": 76
+        },
+        {
+            "Brand": "Dabbalicious",
+            "Social Volume": 73
+        },
+        {
+            "Brand": "Kaneh",
+            "Social Volume": 72
+        },
+        {
+            "Brand": "Sweet Grass Kitchen",
+            "Social Volume": 67
+        },
+        {
+            "Brand": "Bhang",
+            "Social Volume": 66
+        },
+        {
+            "Brand": "Apothecanna",
+            "Social Volume": 61
+        },
+        {
+            "Brand": "Jetty Extracts",
+            "Social Volume": 60
+        },
+        {
+            "Brand": "Kurvana",
+            "Social Volume": 57
+        },
+        {
+            "Brand": "K.I.N.D. Concentrates",
+            "Social Volume": 56
+        },
+        {
+            "Brand": "Nameless Genetics",
+            "Social Volume": 54
+        },
+        {
+            "Brand": "Gold Coast Extracts",
+            "Social Volume": 54
+        },
+        {
+            "Brand": "Honey Vape",
+            "Social Volume": 53
+        },
+        {
+            "Brand": "Northwest Cannabis Solutions",
+            "Social Volume": 52
+        },
+        {
+            "Brand": "Wana Edibles",
+            "Social Volume": 52
+        }
+    ];
+const topDispensaries = [
+    {
+        "Dispensary": "ElementalWell",
+        "Tweets": 22
+    },
+    {
+        "Dispensary": "Airfieldsupply",
+        "Tweets": 17
+    },
+    {
+        "Dispensary": "GoddessDelivers",
+        "Tweets": 11
+    },
+    {
+        "Dispensary": "givingtreeaz",
+        "Tweets": 7
+    },
+    {
+        "Dispensary": "MagOakSocial",
+        "Tweets": 6
+    },
+    {
+        "Dispensary": "BSE420",
+        "Tweets": 2
+    },
+    {
+        "Dispensary": "EmeraldArizona",
+        "Tweets": 2
+    },
+    {
+        "Dispensary": "kindpeoplesrx",
+        "Tweets": 2
+    },
+    {
+        "Dispensary": "Apothecary_420",
+        "Tweets": 1
+    },
+    {
+        "Dispensary": "ChaliceFarms",
+        "Tweets": 1
+    },
+    {
+        "Dispensary": "GREENPHARMSaz",
+        "Tweets": 1
+    },
+    {
+        "Dispensary": "novammj",
+        "Tweets": 1
+    },
+    {
+        "Dispensary": "SwellFarmacy",
+        "Tweets": 1
+    },
+    {
+        "Dispensary": "UgdAz",
+        "Tweets": 1
+    },
+    {
+        "Dispensary": "waterfall_sf",
+        "Tweets": 1
+    },
+    {
+        "Dispensary": "ZenWeHo",
+        "Tweets": 1
+    }
+];
+
+const HorizontalBarChart = React.createClass({
+    render () {
+        return (
+            <BarChart layout="vertical" width={550} height={900} data={this.props.data}
+                      margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                <YAxis type="category" dataKey={this.props.yData}  textAnchor={"end"} />
+                <XAxis type="number" dataKey={this.props.xData} />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip/>
+                <Legend />
+                <Bar dataKey={this.props.xData} fill="#82ca9d" />
             </BarChart>
         );
     }
@@ -360,15 +589,14 @@ class PerformanceCard extends React.Component {
                         </Card>
                         <Card style={{'flex': '3'}}>
                             <CardBlock>
-                                <h1>1.29%</h1>
-                                <CardTitle className="text-uppercase h6">Brandshare Calculator</CardTitle>
-                                <div className="small mb-4 card-subtitle">Make adjustments to see change in shares</div>
                                 <CalculatorForm update={this.props.update.bind(this)} data={this.props.areaChartData}
                                                 dates = {this.props.dates}
                                                 twitter = {this.props.twitter}
                                                 professional = {this.props.professional}
+                                                dispensary = {this.props.dispensary}
                                                 forums = {this.props.forums}
                                                 sku = {this.props.sku}
+                                                graphData = {this.props.multiLineData}
                                 />
                             </CardBlock>
                         </Card>
@@ -386,7 +614,6 @@ const TinyBarChart = ({data}) => (
             <YAxis type="category" dataKey="name" />
             <Bar type="monotone" dataKey="Posters" fill={"#00c853"} />
             <Bar type="monotone" dataKey="Silent Followers" fill={"#2962ff"} />
-
             <Tooltip />
         </BarChart>
         <div className="ml-2 small">Bar Chart</div>
@@ -397,6 +624,12 @@ const TinyBarChart = ({data}) => (
 let types =
     [
         [{
+            "Header":"Gender",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
+        }],
+        [{
             "Type": "Male",
             "Posters": 23,
             "Silent Followers": 44
@@ -405,6 +638,12 @@ let types =
             "Type": "Female",
             "Posters": 77,
             "Silent Followers": 57
+        }],
+        [{
+            "Header":"Generation",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
         }],
         [{
             "Type": "Millennials",
@@ -422,6 +661,12 @@ let types =
             "Silent Followers": 41
         }],
         [{
+            "Header":"Use",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
+        }],
+        [{
             "Type": "Moderate Users",
             "Posters": 45,
             "Silent Followers": 38
@@ -432,9 +677,10 @@ let types =
             "Silent Followers": 62
         }],
         [{
-            "Type": "News Sources",
-            "Posters": 4,
-            "Silent Followers": 30
+            "Header":"News Sources",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
         }],
         [{
             "Type": "Bill Maher",
@@ -467,9 +713,10 @@ let types =
             "Silent Followers": 32
         }],
         [{
-            "Type": "Interests",
-            "Posters": 26,
-            "Silent Followers": 10
+            "Header":"Interests",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
         }],
         [{
             "Type": "Foodies",
@@ -492,9 +739,10 @@ let types =
             "Silent Followers": 35
         }],
         [{
-            "Type": "Cannabis Sources",
-            "Posters": 11,
-            "Silent Followers": 22
+            "Header":"Cannabis Sources",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
         }],
         [{
             "Type": "MarijuanaPolicy",
@@ -507,9 +755,10 @@ let types =
             "Silent Followers": 40
         }],
         [{
-            "Type": "Charity",
-            "Posters": 2,
-            "Silent Followers": 3
+            "Header":"Charity",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
         }],
         [{
             "Type": "ONECampaign",
@@ -522,9 +771,10 @@ let types =
             "Silent Followers": 12
         }],
         [{
-            "Type": "Influencers",
-            "Posters": 5,
-            "Silent Followers": 11
+            "Header":"Influencers",
+            "Type": null,
+            "Posters": null,
+            "Silent Followers": null
         }],
         [{
             "Type": "Barack Obama",
@@ -646,11 +896,11 @@ class PersonaCard extends React.Component {
     render() {
         return(
             <div className={this.props.visibility}>
-                <CardGroup className="sales-card mb-4">
+                <CardGroup className="sales-card mb-4 sm-1">
                     <Card style={{'flex': '4'}}>
                         <CardBlock>
-                            <CardTitle className="text-uppercase h5">Personas</CardTitle>
-                            <table className="table table-bordered">
+                            <CardTitle className="text-uppercase h5 center">Personas</CardTitle>
+                            <table className="table table-responsive table-bordered">
                                 <thead>
                                 <tr>
                                     <th scope="col"></th>
@@ -698,14 +948,19 @@ class PersonaCard extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {types.map((item, i) => <tr>
+                                {types.map(
+                                    (item, i) => { return(
+                                        !item[0].Header ?
+                                            (<tr>
                                     <td>
-                                        {item[0]["Type"]}
-                                    </td>
-                                    <td colSpan={2}>
-                                        <TinyBarChart data={item} />
-                                    </td>
-                                </tr>)}
+                                         {item[0]["Type"]}
+                                        </td>
+                                        <td colSpan={2}>
+                                         <TinyBarChart data={item} />
+                                        </td>
+                                    </tr>) : (<tr><td colSpan={3} className="tdHeaderRow">{item[0].Header}</td></tr>) )
+                                    })
+                                }
 
                                 </tbody>
                             </table>
@@ -853,9 +1108,11 @@ export default class ViewContent extends React.Component {
                 let comp1 = [0.96, 0.99,0.96, 0.99, 1, 1.10, 1, 1.10,0.99,0.96, 0.99, 1,0.99,];
                 let comp2 = [1.32, 1.51,1.32, 1.51, 1.7, 1.67, 1.7, 1.63,1.42, 1.36,1.32, 1.41,1.32,];
                 let dates1yr=["Jan 2017","Feb","Mar", "Apr 2017","May", "Jun", "Jul 2017", "Aug", "Sep", "Oct 2017","Nov","Dec", "Jan 2018"];
+                let dates1wk=["Nov 8","Nov 9","Nov 10","Nov 11","Nov 12","Nov 13","Nov 14","Nov 15",];
+                let dates3mo=["Sep 1", "Sep 14", "Sep 28", "Oct 1", "Oct 28", "Nov 1", "Nov 14", ];
+
 
                 let multiLineData = [];
-
                 for (let i = 0; i < 13; i++){
                     multiLineData.push({
                         kiva:kiva[i],
@@ -893,30 +1150,15 @@ export default class ViewContent extends React.Component {
                             comp1:comp1[i],
                             comp2:comp2[i],
                             percents: percents,
-                            dates: quarters[i]["date"],
+                            dates: dates3mo[i],
                             name: "Q" + quarters[i]["quarter"],
-                            Twitter: quarters[i]["followers_twitter"],
-                            //     Dispensaries: quarters[i]["dispensary"],
-                            Forums: quarters[i]["forums_total"],
-                            Professional: quarters[i]["professional"],
-                            AvgSKU: quarters[i]["sku_predict"],
+                            Twitter: Math.floor(parseFloat(quarters[i]["followers_twitter"]) / 100),
+                            Dispensaries: Math.floor(parseFloat(quarters[i]["dispensary"]) / 100),
+                            Forums: Math.floor(parseFloat(quarters[i]["forums_total"] )) ,
+                            Professional: Math.floor(parseFloat(quarters[i]["professional"]) ),
+                          //  AvgSKU: quarters[i]["sku_predict"],
                         });
                     }
-                    // only push the second half of dates for dates1yr
-                    // else if (i >= 4) {
-                    //     areaChartData.push({
-                    //         percents:percents,
-                    //         dates: quarters[i]["date"],
-                    //         dates1yr: quarters[i]["date"],
-                    //         name: "Q" + quarters[i]["quarter"],
-                    //         Twitter: quarters[i]["followers_twitter"],
-                    //         //     Dispensaries: quarters[i]["dispensary"],
-                    //         Forums: quarters[i]["forums_total"],
-                    //         Professional: quarters[i]["professional"],
-                    //         AvgSKU: quarters[i]["sku_predict"],
-                    //     });
-                    // }
-
 
                     if(i === res.data.length - 2) {
                         sentimentChartData.push(
@@ -927,24 +1169,25 @@ export default class ViewContent extends React.Component {
                         dispensary = quarters[i]["dispensary"];
                     }
                 }
+
                 // remove last column of data bc all 0s
                 areaChartData.pop();
-                let i = 6;
+                let i = 0;
 
                 // just extrapolating Q4 2017 from Q3 '17
-                areaChartData.push({
-                  //  kivaBrandshares:kivaBrandshares[i%4],
-                    // comp1:comp1[i%4],
-                    // comp2:comp2[i%4],
-                    dates: quarters[7]["date"],
-                   // dates1yr:quarters[7]["date"],
-                    name: "Q7",// + quarters[7]["quarter"],
-                    Twitter: quarters[i]["followers_twitter"],
-                    //     Dispensaries: quarters[i]["dispensary"],
-                    Forums: quarters[i]["forums_total"],
-                    Professional: quarters[i]["professional"],
-                    AvgSKU: quarters[i]["sku_predict"],
-                });
+                // areaChartData.push({
+                //   //  kivaBrandshares:kivaBrandshares[i%4],
+                //     // comp1:comp1[i%4],
+                //     // comp2:comp2[i%4],
+                //     dates: quarters[7]["date"],
+                //    // dates1yr:quarters[7]["date"],
+                //     name: "Q7",// + quarters[7]["quarter"],
+                //     Twitter: quarters[i]["followers_twitter"],
+                //          Dispensaries: quarters[i]["dispensary"],
+                //     Forums: quarters[i]["forums_total"],
+                //     Professional: quarters[i]["professional"],
+                //     AvgSKU: quarters[i]["sku_predict"],
+                // });
 
                 let bsTweets = 310;
                 let bsFollowers_twitter = 9425;
@@ -1105,7 +1348,7 @@ export default class ViewContent extends React.Component {
 
         }
 
-        this.setState({areaChartData:tmp});
+     //   this.setState({areaChartData:tmp});
         this.setState({multiLineData:totals});
 
     }
@@ -1211,7 +1454,7 @@ class RTChartWrapper extends React.Component {
         // </LineChart>
 
         return (
-            <div>socIAL</div>
+            <div></div>
         )
     }
 }

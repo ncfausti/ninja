@@ -135,3 +135,12 @@ li.active {
   font-size: 18px;
   width: 100%;
   text-align: center; }
+
+.calculator-form label {
+  font-size: .8rem; }
+
+.tdHeaderRow {
+  background-color: #2962ff;
+  color: #fdfdfd;
+  font-weight: bold;
+  text-transform: uppercase; }

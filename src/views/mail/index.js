@@ -138,7 +138,7 @@ export default class extends React.Component {
                         <div className="wrap profile">
                             <UncontrolledDropdown>
                                 <DropdownToggle tag="div">
-                                    <img src="http://i.imgur.com/0rVeh4A.jpg" alt="avatar"/>
+                                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="avatar"/>
                                 </DropdownToggle>
                                 <DropdownMenu right style={{minWidth: '12rem'}}>
                                     <DropdownItem header>Balance: $993.4</DropdownItem>

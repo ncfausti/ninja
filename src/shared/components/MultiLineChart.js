@@ -1,11 +1,12 @@
 import React from 'react';
 import 'recharts';
 
-import {ComposedChart,AreaChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ReferenceArea} from 'recharts';
+import {ResponsiveContainer,ComposedChart,AreaChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ReferenceArea} from 'recharts';
 
 export const MultiLineChart = (props) => (
 <div className={"stacked-chart"}>
-        <ComposedChart width={800} height={675} data={props.data}
+        <ResponsiveContainer width={"95%"} height={500}>
+        <ComposedChart data={props.data}
                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
     	{/*<AreaChart width={600} height={270}*/}
             {/*margin={{top: 10, right: 30, left: 0, bottom: 0}}>*/}
@@ -22,6 +23,7 @@ export const MultiLineChart = (props) => (
                 <Line type='monotone' name="Comp 2" dataKey='comp2'  stroke='#888'/>
 
         </ComposedChart>
+        </ResponsiveContainer>
     </div>
     );
 

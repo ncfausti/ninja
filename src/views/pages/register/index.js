@@ -17,10 +17,10 @@ export default () => (
                     <header className="mb-5 center">
                         <Link to="/">
                             {/*Ninja by Hans Paul Mösl Junior from the Noun Project*/}
-                            <img src={"/ninja.png"} width={"20%"}/>
-                            <strong className="h3 text-uppercase" style={{color: '#212121'}}>NINJA</strong>
+                            <img src={"/bg_logo.png"} width={"80%"}/>
+                            <strong className="h3 text-uppercase" style={{color: '#212121'}}></strong>
                         </Link>
-                        <p className="lead">Register to admin panel</p>
+                        <p className="lead">Register for an Account</p>
                     </header>
                     <Form action="/">
                         <FormGroup className="mb-4">
