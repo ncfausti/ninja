@@ -278,8 +278,8 @@ class SocialCard extends React.Component {
                                             {socialBreakdown.map( (k,v) => <tr>
                                                 <td>{k.name}</td>
                                                 <td colSpan={1}>{k.val}</td>
-                                                <td colSpan={1}>{(Math.random() > .5) ? (<MdArrowDownward fill={"red"} />) : (<MdArrowUpward fill={"rgb(0, 204, 119)"}/>)}
-                                                {parseFloat(Int(k.val) * .05 * Math.random()).toFixed(2)}%</td>
+                                                <td colSpan={1}>{(k.name === "Dispensaries" || k.name === "Articles") ? (<MdArrowDownward fill={"red"} />) : (<MdArrowUpward fill={"rgb(0, 204, 119)"}/>)}
+                                                {parseFloat(Math.random() * 10).toFixed(2)}%</td>
                                             </tr>)}
                                             </tbody>
                                         </table>
@@ -311,7 +311,7 @@ class SocialCard extends React.Component {
                             </Card>
                         </div>
                         <div className="mb-4 col-sm-12 col-md-6">
-                            <Card>
+                            <Card style={{"height":"993px"}}>
                                 <CardBlock>
                                     <CardTitle className="text-uppercase h3 center">Top Dispensaries <span className="deemphasize">(tweeting about you)</span></CardTitle>
                                     <div>
@@ -321,8 +321,8 @@ class SocialCard extends React.Component {
                             </Card>
                         </div>
                         {/* traffic source */}
-                        <div className="mb-4 col-sm-12 col-md-6">
-                            <Card style={{'flex': '2'}}>
+                        <div className="mb-4 col-sm-12 col-md-12">
+                            <Card style={{"margin":"0 20%"}}>
                                 <CardBlock>
                                     <CardTitle className="text-uppercase h3 center">Tweet Topics</CardTitle>
                                     <Card>
@@ -358,7 +358,6 @@ const SimpleBarChart = React.createClass({
                 <YAxis/>
                 <CartesianGrid strokeDasharray="3 3" />
                 <Tooltip/>
-                <Legend />
                 <Bar dataKey="Percent" fill="#82ca9d" />
             </BarChart>
             </ResponsiveContainer>
@@ -560,7 +559,6 @@ const HorizontalBarChart = React.createClass({
                 <XAxis type="number" dataKey={this.props.xData} />
                 <CartesianGrid strokeDasharray="3 3" />
                 <Tooltip/>
-                <Legend />
                 <Bar dataKey={this.props.xData} fill="#82ca9d" />
             </BarChart>
         );

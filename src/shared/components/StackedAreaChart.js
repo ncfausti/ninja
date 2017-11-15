@@ -1,58 +1,13 @@
 import React from 'react';
 import 'recharts';
 
-import {ComposedChart,AreaChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ReferenceArea} from 'recharts';
+import {ResponsiveContainer, ComposedChart, Line,
+    Area, XAxis, YAxis, CartesianGrid, Tooltip,} from 'recharts';
 
-export default class StackedAreaChart extends React.Component {
-        constructor(props){
-        super(props)
-
-        }
-
-    handleZoomIn()
-    {
-        this.setState(({data: cdata, left = 0, right = 0}) => {
-            return {
-                data: this.props.data.slice(),
-                animation: true,
-                left: left - 800,
-                right: right - 800
-            };
-        });
-    }
-
-
-    handleZoomOut()
-    {
-        this.setState(({data}) => {
-            return {
-                data: this.props.data.slice(),
-                animation: true,
-                left: 0,
-                right: 0
-            }
-        });
-    }
-
-    render(){
-        return (
+export const StackedAreaChart = (props) => (
             <div className={"stacked-chart center"}>
-                    {/*<a*/}
-                        {/*href="javascript: void(0);"*/}
-                        {/*className="btn update"*/}
-                        {/*onClick={this.handleZoomIn.bind( this )}*/}
-                    {/*>*/}
-                            {/*zoom in*/}
-                    {/*</a>*/}
-                    {/*<br/>*/}
-                    {/*<a*/}
-                        {/*href="javascript: void(0);"*/}
-                        {/*className="btn update"*/}
-                        {/*onClick={this.handleZoomOut.bind( this )}*/}
-                    {/*>*/}
-                            {/*reset zoom*/}
-                    {/*</a>*/}
-                    <ComposedChart width={600} height={360} data={this.props.data}
+
+                    <ComposedChart width={480} height={300} data={props.data}
                                    margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                         {/*<AreaChart width={600} height={270}*/}
                         {/*margin={{top: 10, right: 30, left: 0, bottom: 0}}>*/}
@@ -81,10 +36,5 @@ export default class StackedAreaChart extends React.Component {
                             <Line type='monotone' dataKey='AvgSKU' stroke='#ff0000'/>
                     </ComposedChart>
                     <span> This Quarter </span>
-
             </div>
         );
-    }
-}
-
-export {StackedAreaChart}
