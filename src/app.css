@@ -27,14 +27,14 @@
 
 .site-head {
   height: 62px;
-  background: #2962ff;
+  background: #212121;
   padding: 1.2rem; }
 
 .view .view-header, .view .view-content {
   padding: 1em 1.2rem; }
 
 .view .view-header {
-  background: #2962ff;
+  background: #212121;
   margin-top: -2px;
   padding-bottom: 4.4rem; }
 
@@ -114,7 +114,11 @@ li.active {
 
 .overflowTable {
   overflow: scroll !important;
-  max-height: 974px; }
+  max-height: 974px;
+  width: 100%; }
+
+.overflowTable thead {
+  font-size: .8em; }
 
 .floatRight {
   float: right;

@@ -27,6 +27,7 @@ export default class HalfDonutChart extends React.Component{
           data={this.props.data}
           cx={this.props.cx}
           cy={this.props.cy}
+          nameKey={"label"}
           startAngle={180}
           endAngle={0}
           innerRadius={this.props.inR}

@@ -370,119 +370,119 @@ const topBrands = [
         "Brand": "Marley's Naturals",
         "Social Volume": 359
     },
-        {
-            "Brand": "Brand X",
-            "Social Volume": 333
-        },
-        {
-            "Brand": "Cheeba Chews",
-            "Social Volume": 217
-        },
-        {
-            "Brand": "Bloom Farms",
-            "Social Volume": 214
-        },
-        {
-            "Brand": "FlavRx",
-            "Social Volume": 201
-        },
-        {
-            "Brand": "AbsoluteXtracts",
-            "Social Volume": 171
-        },
-        {
-            "Brand": "Kushy Punch",
-            "Social Volume": 170
-        },
-        {
-            "Brand": "O.penVape",
-            "Social Volume": 148
-        },
-        {
-            "Brand": "Moxie Seeds & Extracts",
-            "Social Volume": 125
-        },
-        {
-            "Brand": "Mary's Medicinals",
-            "Social Volume": 122
-        },
-        {
-            "Brand": "Wyld",
-            "Social Volume": 104
-        },
-        {
-            "Brand": "Dixie",
-            "Social Volume": 98
-        },
-        {
-            "Brand": "Cavi Cone",
-            "Social Volume": 92
-        },
-        {
-            "Brand": "LOL Edibles",
-            "Social Volume": 76
-        },
-        {
-            "Brand": "Oleum Extracts",
-            "Social Volume": 76
-        },
-        {
-            "Brand": "Zoots",
-            "Social Volume": 76
-        },
-        {
-            "Brand": "Dabbalicious",
-            "Social Volume": 73
-        },
-        {
-            "Brand": "Kaneh",
-            "Social Volume": 72
-        },
-        {
-            "Brand": "Sweet Grass Kitchen",
-            "Social Volume": 67
-        },
-        {
-            "Brand": "Bhang",
-            "Social Volume": 66
-        },
-        {
-            "Brand": "Apothecanna",
-            "Social Volume": 61
-        },
-        {
-            "Brand": "Jetty Extracts",
-            "Social Volume": 60
-        },
-        {
-            "Brand": "Kurvana",
-            "Social Volume": 57
-        },
-        {
-            "Brand": "K.I.N.D. Concentrates",
-            "Social Volume": 56
-        },
-        {
-            "Brand": "Nameless Genetics",
-            "Social Volume": 54
-        },
-        {
-            "Brand": "Gold Coast Extracts",
-            "Social Volume": 54
-        },
-        {
-            "Brand": "Honey Vape",
-            "Social Volume": 53
-        },
-        {
-            "Brand": "Northwest Cannabis Solutions",
-            "Social Volume": 52
-        },
-        {
-            "Brand": "Wana Edibles",
-            "Social Volume": 52
-        }
-    ];
+    {
+        "Brand": "Brand X",
+        "Social Volume": 333
+    },
+    {
+        "Brand": "Cheeba Chews",
+        "Social Volume": 217
+    },
+    {
+        "Brand": "Bloom Farms",
+        "Social Volume": 214
+    },
+    {
+        "Brand": "FlavRx",
+        "Social Volume": 201
+    },
+    {
+        "Brand": "AbsoluteXtracts",
+        "Social Volume": 171
+    },
+    {
+        "Brand": "Kushy Punch",
+        "Social Volume": 170
+    },
+    {
+        "Brand": "O.penVape",
+        "Social Volume": 148
+    },
+    {
+        "Brand": "Moxie Seeds & Extracts",
+        "Social Volume": 125
+    },
+    {
+        "Brand": "Mary's Medicinals",
+        "Social Volume": 122
+    },
+    {
+        "Brand": "Wyld",
+        "Social Volume": 104
+    },
+    {
+        "Brand": "Dixie",
+        "Social Volume": 98
+    },
+    {
+        "Brand": "Cavi Cone",
+        "Social Volume": 92
+    },
+    {
+        "Brand": "LOL Edibles",
+        "Social Volume": 76
+    },
+    {
+        "Brand": "Oleum Extracts",
+        "Social Volume": 76
+    },
+    {
+        "Brand": "Zoots",
+        "Social Volume": 76
+    },
+    {
+        "Brand": "Dabbalicious",
+        "Social Volume": 73
+    },
+    {
+        "Brand": "Kaneh",
+        "Social Volume": 72
+    },
+    {
+        "Brand": "Sweet Grass Kitchen",
+        "Social Volume": 67
+    },
+    {
+        "Brand": "Bhang",
+        "Social Volume": 66
+    },
+    {
+        "Brand": "Apothecanna",
+        "Social Volume": 61
+    },
+    {
+        "Brand": "Jetty Extracts",
+        "Social Volume": 60
+    },
+    {
+        "Brand": "Kurvana",
+        "Social Volume": 57
+    },
+    {
+        "Brand": "K.I.N.D. Concentrates",
+        "Social Volume": 56
+    },
+    {
+        "Brand": "Nameless Genetics",
+        "Social Volume": 54
+    },
+    {
+        "Brand": "Gold Coast Extracts",
+        "Social Volume": 54
+    },
+    {
+        "Brand": "Honey Vape",
+        "Social Volume": 53
+    },
+    {
+        "Brand": "Northwest Cannabis Solutions",
+        "Social Volume": 52
+    },
+    {
+        "Brand": "Wana Edibles",
+        "Social Volume": 52
+    }
+];
 const topDispensaries = [
     {
         "Dispensary": "ElementalWell",
@@ -873,16 +873,6 @@ let personas = [
         "TopPostsAttributes": "Relaxing and taste",
         "ProductPreferences": "Choclate Edibles"
     }],
-    [{
-        "Icon":"icons/liberal.png",
-        "PersonaName": "Liberal Mainstream News Late Night Watchers",
-        "Posters": 14,
-        "Silent Followers": 24,
-        "SentimentAnalysis": "97%",
-        "CompetitorsSentiment": "90%",
-        "TopPostsAttributes": "Relaxing",
-        "ProductPreferences": "Topicals"
-    }]
 ];
 
 class PersonaCard extends React.Component {
@@ -937,7 +927,7 @@ class PersonaCard extends React.Component {
                         <CardBlock>
                             <CardTitle className="text-uppercase h5 center">Social Activity</CardTitle>
                             <span className={"overflowTable"}>
-                            <table className="table table-bordered centered">
+                            <table className="table table-responsive table-bordered centered">
                                 <thead>
                                 <tr>
                                     <th scope="col">Type</th>
@@ -1160,9 +1150,9 @@ export default class ViewContent extends React.Component {
 
                     if(i === res.data.length - 2) {
                         sentimentChartData.push(
-                            {name:"negative", value: parseInt(quarters[i]["negative"])},//,
-                            {name:"slight_pos", value: parseInt(quarters[i]["slight_pos"])},
-                            {name:"very_positive", value: parseInt(quarters[i]["very_positive"])},
+                            {name:"negative",label:"Negative", value: parseInt(quarters[i]["negative"])},//,
+                            {name:"slight_pos",label:"Slightly Positive", value: parseInt(quarters[i]["slight_pos"])},
+                            {name:"very_positive",label:"Very Positive", value: parseInt(quarters[i]["very_positive"])},
                         )
                         dispensary = quarters[i]["dispensary"];
                     }
@@ -1331,6 +1321,8 @@ export default class ViewContent extends React.Component {
 
         let percents = [0,1,2,3];
 
+        let projBrandshares = [];
+
         for(var i = 0; i < this.state.multiLineData.length; i++) {
             if(i < this.state.multiLineData.length-3){
                 totals.push({
@@ -1339,7 +1331,7 @@ export default class ViewContent extends React.Component {
             }
             else{
                 totals.push({
-                    kiva:this.calcBrandshare(quarter) * 100, comp1:this.state.comp1[i], comp2:this.state.comp2[i], dates:this.state.dates1yr[i], percents: percents[i]
+                    kiva: (this.calcBrandshare(quarter) * 100).toFixed(3), comp1:this.state.comp1[i], comp2:this.state.comp2[i], dates:this.state.dates1yr[i], percents: percents[i]
                 });
                 quarter++
             }
@@ -1352,12 +1344,27 @@ export default class ViewContent extends React.Component {
     }
 
     calcBrandshare(quarter) {
-        let brandshare = ( (50/3. * (quarter / 3) )
+        let q7 = .0122
+        let brandshare = ( (50 * 8 )
             + (57 * this.state.bsProfessional)
             + (1.6 * this.state.bsForums)
             + (1114.4 * this.state.bsComposite)
             + (.003 * (this.state.bsTweets * this.state.bsDispensary))
-            + (.07 * this.state.bsFollowers_twitter)) ** (1 + ((quarter*2) * .0001))  / 340000;
+            + (.07 * this.state.bsFollowers_twitter))  / 340000;
+
+        // smooth line from
+        // 1.22 to brandshare
+        // 1.22 + (brandshare / 3) + brandshare / 3 + brandshare / 3
+
+        let bsPart = (brandshare / 3) * .1;
+
+        if (quarter === 8)
+            return q7 + bsPart;
+        if (quarter === 9)
+            return q7 + bsPart * 2;
+        if (quarter === 10)
+            return q7 + bsPart * 3;
+
         return brandshare;
     }
 

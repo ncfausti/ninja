@@ -97,7 +97,8 @@ li.active {color:#333;font-weight:bold;}
 .pos {color:green;}
 .tinyChartWrapper .recharts-wrapper {margin-left: -22%;}
 .overflowTable { overflow:scroll !important;
-    max-height:974px;}
+    max-height:974px;width: 100%}
+.overflowTable thead {font-size:.8em;}
 .floatRight {float: right; display:inline;}
 .floatLeft {float: left; display:inline;}
 .recharts-cartesian-axis-ticks {font-size:10px;}

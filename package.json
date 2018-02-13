@@ -17,6 +17,7 @@
 		"react-scripts": "1.0.10",
 		"react-scrollbar": "^0.5.1",
 		"react-select": "^1.0.0-rc.5",
+		"react-slider": "^0.9.0",
 		"react-transition-group": "^1.2.0",
 		"reactable": "^0.14.1",
 		"reactstrap": "^4.8.0",

@@ -5,7 +5,7 @@
   .view-content.view-invoice:before {
     content: '';
     position: absolute;
-    background: #2962ff;
+    background: #212121;
     width: 100%;
     top: 0;
     left: 0;
